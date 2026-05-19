@@ -2,67 +2,133 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
-const plans = [
+const packs = [
   {
-    id: "base",
-    name: "Базовый",
-    price: "199 ₽",
-    period: "/ месяц",
-    icon: "Star",
+    id: "pack1",
+    name: "Стартовый",
+    price: 250,
+    icon: "Rocket",
     popular: false,
-    perks: [
-      "Префикс [VIP] в чате",
-      "Увеличенный инвентарь",
-      "Приоритетный вход на сервер",
-      "Цветной ник",
+    items: [
+      { icon: "Coins", text: "50 000 игровой валюты ВОН" },
+      { icon: "Shirt", text: "Уникальная лимитированная одежда" },
+      { icon: "Gem", text: "1 500 WC донат-валюты" },
     ],
   },
   {
-    id: "pro",
-    name: "Премиум",
-    price: "449 ₽",
-    period: "/ месяц",
-    icon: "Crown",
+    id: "pack2",
+    name: "Продвинутый",
+    price: 500,
+    icon: "Zap",
     popular: true,
-    perks: [
-      "Всё из Базового",
-      "Префикс [PREMIUM] в чате",
-      "Эксклюзивные транспортные средства",
-      "Доступ к закрытым зонам",
-      "Двойной опыт",
-      "Особый скин персонажа",
+    items: [
+      { icon: "Coins", text: "100 000 игровой валюты ВОН" },
+      { icon: "PawPrint", text: "Бесплатный питомец на выбор" },
+      { icon: "Gem", text: "2 500 WC донат-валюты" },
     ],
   },
   {
-    id: "elite",
+    id: "pack3",
     name: "Элитный",
-    price: "899 ₽",
-    period: "/ месяц",
-    icon: "Gem",
+    price: 899,
+    icon: "Crown",
     popular: false,
-    perks: [
-      "Всё из Премиум",
-      "Префикс [ELITE] в чате",
-      "Личный дом в игре",
-      "Уникальные анимации",
-      "Приоритетная поддержка",
-      "Ранний доступ к обновлениям",
-      "Эксклюзивные ивенты",
+    items: [
+      { icon: "Coins", text: "200 000 игровой валюты ВОН" },
+      { icon: "Home", text: "Бесплатный дом на сервере" },
+      { icon: "Gem", text: "3 500 WC донат-валюты" },
     ],
   },
 ];
 
-const oneTime = [
-  { icon: "Coins", label: "10 000 монет", price: "99 ₽" },
-  { icon: "Coins", label: "50 000 монет", price: "399 ₽" },
-  { icon: "Coins", label: "150 000 монет", price: "999 ₽" },
-  { icon: "Package", label: "Стартовый набор", price: "149 ₽" },
-  { icon: "Shirt", label: "Эксклюзивный скин", price: "249 ₽" },
-  { icon: "Key", label: "Смена ника", price: "79 ₽" },
-];
+const wcPresets = [100, 250, 500, 1000, 2500, 5000];
+const RATE = 3.5;
+
+function WcConverter() {
+  const [rub, setRub] = useState(100);
+  const wc = Math.floor(rub * RATE);
+
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-7 max-w-xl mx-auto">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-11 h-11 rounded-xl flex items-center justify-center"
+          style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+          <Icon name="Gem" size={20} style={{ color: "#25c666" }} />
+        </div>
+        <div>
+          <div className="font-bold text-gray-900">Пополнить WC</div>
+          <div className="text-xs text-gray-400">Курс: 1 ₽ = {RATE} WC</div>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-2 mb-5">
+        {wcPresets.map((preset) => {
+          const presetRub = Math.round(preset / RATE);
+          const active = Math.floor(presetRub * RATE) === wc;
+          return (
+            <button
+              key={preset}
+              onClick={() => setRub(presetRub)}
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all"
+              style={
+                active
+                  ? { backgroundColor: "#25c666", color: "#fff", borderColor: "#25c666" }
+                  : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
+              }
+            >
+              {preset} WC
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mb-5">
+        <div>
+          <label className="block text-xs text-gray-400 mb-1.5">Вы платите</label>
+          <div className="relative">
+            <input
+              type="number"
+              min={1}
+              value={rub}
+              onChange={e => setRub(Math.max(1, Number(e.target.value)))}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 font-semibold text-sm focus:outline-none transition-colors"
+              onFocus={e => (e.currentTarget.style.borderColor = "#25c666")}
+              onBlur={e => (e.currentTarget.style.borderColor = "#e5e7eb")}
+            />
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">₽</span>
+          </div>
+        </div>
+        <div>
+          <label className="block text-xs text-gray-400 mb-1.5">Вы получаете</label>
+          <div className="w-full px-4 py-3 rounded-xl border font-bold text-sm"
+            style={{ borderColor: "#25c666", backgroundColor: "#f0fdf4", color: "#25c666" }}>
+            {wc.toLocaleString("ru-RU")} WC
+          </div>
+        </div>
+      </div>
+
+      <button
+        className="w-full py-3 rounded-xl text-white font-semibold text-sm transition-colors"
+        style={{ backgroundColor: "#25c666" }}
+        onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
+        onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
+      >
+        Пополнить на {wc.toLocaleString("ru-RU")} WC
+      </button>
+    </div>
+  );
+}
 
 export default function Donate() {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selectedPack, setSelectedPack] = useState<string | null>(null);
+  const [offerOpen, setOfferOpen] = useState(false);
+
+  const scrollToOffer = () => {
+    setOfferOpen(true);
+    setTimeout(() => {
+      document.getElementById("offer-section")?.scrollIntoView({ behavior: "smooth" });
+    }, 50);
+  };
 
   return (
     <div className="min-h-screen bg-[#f8fafb] text-gray-900">
@@ -77,7 +143,7 @@ export default function Donate() {
             <span className="font-bold text-gray-900 text-lg tracking-tight">WayWorlds</span>
           </Link>
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-500">
-            <Link to="/#features" className="hover:text-gray-900 transition-colors">Возможности</Link>
+            <Link to="/" className="hover:text-gray-900 transition-colors">Возможности</Link>
             <Link to="/donate" className="font-medium transition-colors" style={{ color: "#25c666" }}>Донат</Link>
           </div>
           <a
@@ -103,121 +169,134 @@ export default function Donate() {
           Донат <span style={{ color: "#25c666" }}>WayWorlds</span>
         </h1>
         <p className="text-gray-500 text-base max-w-xl mx-auto leading-relaxed">
-          Поддержи развитие сервера и получи уникальные привилегии. Все средства идут на улучшение игры.
+          Стартовые паки для быстрого начала игры и пополнение донат-валюты WC.
         </p>
       </section>
 
-      {/* SUBSCRIPTION PLANS */}
+      {/* PACKS */}
       <section className="max-w-6xl mx-auto px-6 py-10">
         <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Подписки</h2>
-          <p className="text-gray-400 text-sm">Ежемесячные привилегии для настоящих игроков</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Стартовые паки</h2>
+          <p className="text-gray-400 text-sm">Выбери пак и начни игру с преимуществом</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {plans.map((plan) => (
-            <div
-              key={plan.id}
-              onClick={() => setSelected(plan.id)}
-              className={`relative rounded-2xl p-7 cursor-pointer transition-all border ${
-                selected === plan.id
-                  ? "border-[#25c666] shadow-lg"
-                  : "border-gray-100 bg-white hover:border-[#25c666]/50 hover:shadow-md"
-              } bg-white`}
-            >
-              {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold text-white shadow-sm"
-                    style={{ backgroundColor: "#25c666" }}>
-                    Популярный
-                  </span>
-                </div>
-              )}
-
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
-                  <Icon name={plan.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
-                </div>
-                <div>
-                  <div className="font-bold text-gray-900">{plan.name}</div>
-                  <div className="text-xs text-gray-400">привилегия</div>
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
-                <span className="text-gray-400 text-sm ml-1">{plan.period}</span>
-              </div>
-
-              <ul className="space-y-2.5 mb-7">
-                {plan.perks.map((perk) => (
-                  <li key={perk} className="flex items-start gap-2 text-sm text-gray-600">
-                    <Icon name="Check" size={15} className="mt-0.5 shrink-0" style={{ color: "#25c666" }} />
-                    {perk}
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                className="w-full py-3 rounded-xl font-semibold text-sm transition-colors"
-                style={
-                  selected === plan.id || plan.popular
-                    ? { backgroundColor: "#25c666", color: "#fff" }
-                    : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
-                }
-                onMouseEnter={e => {
-                  if (selected !== plan.id && !plan.popular) return;
-                  e.currentTarget.style.backgroundColor = "#1aaf55";
-                }}
-                onMouseLeave={e => {
-                  if (selected !== plan.id && !plan.popular) return;
-                  e.currentTarget.style.backgroundColor = "#25c666";
-                }}
+          {packs.map((pack) => {
+            const isSelected = selectedPack === pack.id;
+            return (
+              <div
+                key={pack.id}
+                onClick={() => setSelectedPack(pack.id)}
+                className={`relative rounded-2xl p-7 cursor-pointer transition-all border bg-white ${
+                  isSelected
+                    ? "border-[#25c666] shadow-lg"
+                    : "border-gray-100 hover:border-[#25c666]/50 hover:shadow-md"
+                }`}
               >
-                Выбрать
-              </button>
-            </div>
-          ))}
+                {pack.popular && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <span className="px-3 py-1 rounded-full text-xs font-semibold text-white shadow-sm"
+                      style={{ backgroundColor: "#25c666" }}>
+                      Популярный
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+                    <Icon name={pack.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-900">{pack.name}</div>
+                    <div className="text-xs text-gray-400">стартовый пак</div>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <span className="text-3xl font-bold text-gray-900">{pack.price} ₽</span>
+                  <span className="text-gray-400 text-sm ml-1">/ разово</span>
+                </div>
+
+                <ul className="space-y-3 mb-7">
+                  {pack.items.map((item) => (
+                    <li key={item.text} className="flex items-start gap-2.5 text-sm text-gray-600">
+                      <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+                        style={{ backgroundColor: "#f0fdf4" }}>
+                        <Icon name={item.icon} size={13} fallback="Check" style={{ color: "#25c666" }} />
+                      </div>
+                      {item.text}
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  className="w-full py-3 rounded-xl font-semibold text-sm transition-colors"
+                  style={
+                    isSelected || pack.popular
+                      ? { backgroundColor: "#25c666", color: "#fff" }
+                      : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
+                  }
+                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = isSelected || pack.popular ? "#25c666" : "#f0fdf4")}
+                >
+                  Купить за {pack.price} ₽
+                </button>
+              </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* ONE-TIME ITEMS */}
+      {/* WC CONVERTER */}
       <section className="max-w-6xl mx-auto px-6 py-10">
         <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Разовые покупки</h2>
-          <p className="text-gray-400 text-sm">Монеты, скины и другие предметы без подписки</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Пополнить WC</h2>
+          <p className="text-gray-400 text-sm">Донат-валюта для покупок внутри игры</p>
         </div>
+        <WcConverter />
+      </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-          {oneTime.map((item) => (
-            <div key={item.label}
-              className="feature-card rounded-2xl p-5 flex items-center justify-between gap-4 cursor-pointer hover:border-[#25c666]/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
-                  <Icon name={item.icon} size={18} fallback="Package" style={{ color: "#25c666" }} />
-                </div>
-                <span className="font-medium text-gray-800 text-sm">{item.label}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="font-bold text-gray-900 whitespace-nowrap">{item.price}</span>
-                <button
-                  className="px-3 py-1.5 rounded-lg text-white text-xs font-semibold transition-colors"
-                  style={{ backgroundColor: "#25c666" }}
-                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
-                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
-                >
-                  Купить
-                </button>
-              </div>
+      {/* OFFER */}
+      <section id="offer-section" className="max-w-6xl mx-auto px-6 pb-10">
+        <div className="bg-white rounded-2xl border border-gray-100 p-6">
+          <button
+            className="w-full flex items-center justify-between text-left"
+            onClick={() => setOfferOpen(!offerOpen)}
+          >
+            <div className="flex items-center gap-2">
+              <Icon name="FileText" size={16} className="text-gray-400" />
+              <span className="text-sm font-medium text-gray-600">Оферта и условия оплаты</span>
             </div>
-          ))}
+            <Icon name={offerOpen ? "ChevronUp" : "ChevronDown"} size={16} className="text-gray-400" />
+          </button>
+
+          {offerOpen && (
+            <div className="mt-5 pt-5 border-t border-gray-100 text-xs text-gray-400 leading-relaxed space-y-4">
+              <p><strong className="text-gray-600">1. Общие положения</strong><br />
+              Настоящая оферта регулирует условия приобретения внутриигровых товаров на сервере WayWorlds. Совершая оплату, вы подтверждаете согласие с настоящими условиями.</p>
+
+              <p><strong className="text-gray-600">2. Предмет договора</strong><br />
+              Администрация WayWorlds предоставляет виртуальные товары (внутриигровую валюту ВОН, донат-валюту WC, предметы, привилегии), не имеющие реальной денежной стоимости и не подлежащие обмену на реальные деньги.</p>
+
+              <p><strong className="text-gray-600">3. Курс и оплата</strong><br />
+              Курс донат-валюты: 1 ₽ = 3,5 WC. Все цены указаны в рублях РФ. Оплата производится через защищённые платёжные системы. После успешной оплаты товар начисляется на аккаунт в течение 5 минут. При технических сбоях — обратитесь в поддержку.</p>
+
+              <p><strong className="text-gray-600">4. Возврат средств</strong><br />
+              Возврат возможен в течение 24 часов с момента покупки при условии, что виртуальный товар не был использован. Для оформления возврата обратитесь в поддержку через Telegram.</p>
+
+              <p><strong className="text-gray-600">5. Ответственность</strong><br />
+              Администрация не несёт ответственности за потерю товаров вследствие нарушения правил сервера, блокировки аккаунта или передачи данных третьим лицам.</p>
+
+              <p><strong className="text-gray-600">6. Контакты</strong><br />
+              По вопросам оплаты и возврата: <a href="https://t.me/wayworlds" className="underline hover:text-gray-600">Telegram-поддержка</a> или <a href="mailto:admin@wayworlds.ru" className="underline hover:text-gray-600">admin@wayworlds.ru</a></p>
+            </div>
+          )}
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-gray-100 bg-white mt-10 py-8 px-6">
+      <footer className="border-t border-gray-100 bg-white py-8 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#25c666" }}>
@@ -227,7 +306,9 @@ export default function Donate() {
           </Link>
           <p className="text-xs text-gray-300">© 2025 WayWorlds. Все права защищены.</p>
           <div className="flex gap-5 text-xs text-gray-300">
-            <a href="#" className="hover:text-gray-500 transition-colors">Политика конфиденциальности</a>
+            <button onClick={scrollToOffer} className="hover:text-gray-500 transition-colors">
+              Оферта оплаты
+            </button>
             <a href="#" className="hover:text-gray-500 transition-colors">Соглашение</a>
           </div>
         </div>
