@@ -86,12 +86,15 @@ export default function Index() {
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src={LOGO} alt="WayWorlds" className="w-10 h-10 object-contain drop-shadow-sm" />
+            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+              <img src={LOGO} alt="WayWorlds" className="w-8 h-8 object-contain" />
+            </div>
             <span className="font-bold text-gray-900 text-lg tracking-tight">WayWorlds</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-500">
             <a href="#features" className="hover:text-gray-900 transition-colors">Возможности</a>
             <Link to="/donate" className="hover:text-gray-900 transition-colors">Донат</Link>
+            <Link to="/rules" className="hover:text-gray-900 transition-colors">Правила</Link>
           </div>
           <a
             href="https://t.me/wayworlds"
