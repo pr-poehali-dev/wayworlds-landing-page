@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 
-const HERO_IMG = "https://cdn.poehali.dev/projects/b41eb1a9-0c58-4130-87e9-295a9231600e/files/bdc4b840-8b01-463d-b3bb-63a04d410c7f.jpg";
-
 const features = [
   {
     icon: "Home",
@@ -36,12 +34,6 @@ const features = [
   },
 ];
 
-const stats = [
-  { label: "Игроков онлайн", value: 847, icon: "Users" },
-  { label: "Миссий выполнено", value: 12483, icon: "Target" },
-  { label: "Активных серверов", value: 3, icon: "Server" },
-];
-
 function useCountUp(target: number, duration = 2000, start = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -58,12 +50,15 @@ function useCountUp(target: number, duration = 2000, start = false) {
   return count;
 }
 
-function StatCard({ stat, animate }: { stat: typeof stats[0]; animate: boolean }) {
-  const count = useCountUp(stat.value, 2000, animate);
+function OnlineCounter({ animate }: { animate: boolean }) {
+  const count = useCountUp(847, 2000, animate);
   return (
-    <div className="flex flex-col items-center gap-1 px-8 py-4">
-      <span className="text-3xl font-bold text-gray-900">{count.toLocaleString("ru-RU")}</span>
-      <span className="text-sm text-gray-500">{stat.label}</span>
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm flex items-center justify-center px-10 py-5 gap-4">
+      <Icon name="Users" size={22} className="text-gray-400" />
+      <div className="flex flex-col items-center gap-0.5">
+        <span className="text-3xl font-bold text-gray-900">{count.toLocaleString("ru-RU")}</span>
+        <span className="text-sm text-gray-500">Игроков онлайн</span>
+      </div>
     </div>
   );
 }
@@ -95,7 +90,7 @@ export default function Index() {
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-green-500 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#addfaa" }}>
               <Icon name="Zap" size={14} className="text-white" />
             </div>
             <span className="font-bold text-gray-900 text-lg tracking-tight">WayWorlds</span>
@@ -121,14 +116,15 @@ export default function Index() {
       <section className="max-w-6xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
         {/* Left */}
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-50 border border-green-200 mb-8">
-            <span className="w-2 h-2 rounded-full bg-green-500" />
-            <span className="text-green-700 text-xs font-medium">Ролплей сервер</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-8"
+            style={{ backgroundColor: "#f0fdf4", borderColor: "#addfaa" }}>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: "#addfaa" }} />
+            <span className="text-xs font-medium" style={{ color: "#4a7a48" }}>RolePlay сервер</span>
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
             Добро пожаловать в{" "}
-            <span className="text-green-500">WayWorlds</span>
+            <span style={{ color: "#addfaa" }}>WayWorlds</span>
           </h1>
 
           <p className="text-gray-500 text-base leading-relaxed mb-8 max-w-md">
@@ -137,7 +133,12 @@ export default function Index() {
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-green-500 hover:bg-green-600 text-white font-semibold transition-colors shadow-sm shadow-green-200">
+            <button
+              className="flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition-colors shadow-sm"
+              style={{ backgroundColor: "#addfaa" }}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#96d393")}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#addfaa")}
+            >
               <Icon name="Play" size={16} className="text-white" />
               Начать играть
             </button>
@@ -155,32 +156,19 @@ export default function Index() {
           <p className="mt-6 text-xs text-gray-400">версия 1.0.0</p>
         </div>
 
-        {/* Right — image card */}
+        {/* Right — grey placeholder */}
         <div className="relative flex justify-center">
-          <div className="w-full max-w-md aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-gray-100">
-            <img
-              src={HERO_IMG}
-              alt="WayWorlds gameplay"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          {/* Floating badge */}
+          <div className="w-full max-w-md aspect-[4/3] rounded-2xl shadow-xl border border-gray-100 bg-gray-300" />
           <div className="absolute -bottom-4 left-8 flex items-center gap-2 bg-white rounded-xl px-4 py-2.5 shadow-lg border border-gray-100">
-            <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+            <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ backgroundColor: "#addfaa" }} />
             <span className="text-sm font-medium text-gray-700">847 онлайн</span>
           </div>
         </div>
       </section>
 
-      {/* STATS */}
+      {/* STATS — only online counter */}
       <section className="max-w-6xl mx-auto px-6 py-8" ref={statsRef}>
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-100">
-          {stats.map((stat) => (
-            <div key={stat.label} className="flex-1">
-              <StatCard stat={stat} animate={statsVisible} />
-            </div>
-          ))}
-        </div>
+        <OnlineCounter animate={statsVisible} />
       </section>
 
       {/* FEATURES */}
@@ -197,8 +185,9 @@ export default function Index() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {features.map((f) => (
             <div key={f.title} className="feature-card rounded-2xl p-6">
-              <div className="w-11 h-11 rounded-xl bg-green-50 border border-green-100 flex items-center justify-center mb-5">
-                <Icon name={f.icon} size={22} fallback="Star" className="text-green-500" />
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
+                style={{ backgroundColor: "#f0fdf4", border: "1px solid #addfaa" }}>
+                <Icon name={f.icon} size={22} fallback="Star" style={{ color: "#addfaa" }} />
               </div>
               <h3 className="font-semibold text-gray-900 text-lg mb-2">{f.title}</h3>
               <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
@@ -215,7 +204,12 @@ export default function Index() {
         </div>
         <div className="relative rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-white aspect-video flex items-center justify-center">
           <div className="text-center">
-            <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-green-600 transition-colors shadow-md shadow-green-200">
+            <div
+              className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer transition-colors shadow-md"
+              style={{ backgroundColor: "#addfaa" }}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#96d393")}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#addfaa")}
+            >
               <Icon name="Play" size={28} className="text-white ml-1" />
             </div>
             <p className="text-gray-400 text-sm">Скажи мне ссылку на YouTube — вставлю видео сюда</p>
@@ -226,8 +220,9 @@ export default function Index() {
       {/* SUBSCRIBE */}
       <section id="subscribe" className="max-w-6xl mx-auto px-6 py-16">
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-10 md:p-14 text-center max-w-2xl mx-auto">
-          <div className="w-12 h-12 rounded-xl bg-green-50 border border-green-100 flex items-center justify-center mx-auto mb-5">
-            <Icon name="Bell" size={22} className="text-green-500" />
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-5"
+            style={{ backgroundColor: "#f0fdf4", border: "1px solid #addfaa" }}>
+            <Icon name="Bell" size={22} style={{ color: "#addfaa" }} />
           </div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Будь в курсе</h2>
           <p className="text-gray-400 mb-8 text-sm">
@@ -240,20 +235,26 @@ export default function Index() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="твой@email.ru"
-                className="flex-1 px-4 py-3 rounded-xl border border-gray-200 text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-green-400 transition-colors"
+                className="flex-1 px-4 py-3 rounded-xl border border-gray-200 text-gray-900 text-sm placeholder-gray-400 focus:outline-none transition-colors"
+                style={{ outline: "none" }}
+                onFocus={e => (e.currentTarget.style.borderColor = "#addfaa")}
+                onBlur={e => (e.currentTarget.style.borderColor = "#e5e7eb")}
                 required
               />
               <button
                 type="submit"
-                className="px-6 py-3 rounded-xl bg-green-500 hover:bg-green-600 text-white font-semibold text-sm transition-colors whitespace-nowrap shadow-sm shadow-green-200"
+                className="px-6 py-3 rounded-xl text-white font-semibold text-sm transition-colors whitespace-nowrap shadow-sm"
+                style={{ backgroundColor: "#addfaa" }}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#96d393")}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#addfaa")}
               >
                 Подписаться
               </button>
             </form>
           ) : (
             <div className="flex items-center justify-center gap-2 py-2">
-              <Icon name="CheckCircle" size={20} className="text-green-500" />
-              <span className="text-green-600 font-medium">Ты подписан! Ждём тебя в игре</span>
+              <Icon name="CheckCircle" size={20} style={{ color: "#addfaa" }} />
+              <span className="font-medium" style={{ color: "#4a7a48" }}>Ты подписан! Ждём тебя в игре</span>
             </div>
           )}
           <p className="text-xs text-gray-300 mt-4">Никакого спама — только важные новости</p>
@@ -266,7 +267,7 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-lg bg-green-500 flex items-center justify-center">
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#addfaa" }}>
                   <Icon name="Zap" size={14} className="text-white" />
                 </div>
                 <span className="font-bold text-gray-900">WayWorlds</span>
@@ -278,25 +279,25 @@ export default function Index() {
             <div>
               <h4 className="font-semibold text-gray-700 mb-4 text-sm">Навигация</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#features" className="hover:text-green-500 transition-colors">Возможности</a></li>
-                <li><a href="#video" className="hover:text-green-500 transition-colors">Геймплей</a></li>
-                <li><a href="#subscribe" className="hover:text-green-500 transition-colors">Подписка</a></li>
-                <li><a href="#" className="hover:text-green-500 transition-colors">Правила сервера</a></li>
+                <li><a href="#features" className="hover:text-gray-700 transition-colors">Возможности</a></li>
+                <li><a href="#video" className="hover:text-gray-700 transition-colors">Геймплей</a></li>
+                <li><a href="#subscribe" className="hover:text-gray-700 transition-colors">Подписка</a></li>
+                <li><a href="#" className="hover:text-gray-700 transition-colors">Правила сервера</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-gray-700 mb-4 text-sm">Контакты</h4>
               <div className="flex flex-col gap-3">
                 <a href="https://t.me/wayworlds" target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-green-500 transition-colors">
+                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 transition-colors">
                   <Icon name="Send" size={14} />Telegram-канал
                 </a>
                 <a href="https://discord.gg/wayworlds" target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-green-500 transition-colors">
+                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 transition-colors">
                   <Icon name="MessageSquare" size={14} />Discord-сервер
                 </a>
                 <a href="mailto:admin@wayworlds.ru"
-                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-green-500 transition-colors">
+                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 transition-colors">
                   <Icon name="Mail" size={14} />admin@wayworlds.ru
                 </a>
               </div>
