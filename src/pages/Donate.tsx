@@ -122,14 +122,14 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
   const wc = Math.floor(rub * RATE);
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-7">
+    <div className="bg-white dark:bg-[#161b25] rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm p-7">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-11 h-11 rounded-xl flex items-center justify-center"
-          style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+          style={{ backgroundColor: "#1a2e20", border: "1px solid #25c666" }}>
           <Icon name="Gem" size={20} style={{ color: "#25c666" }} />
         </div>
         <div>
-          <div className="font-bold text-gray-900">Пополнить WC</div>
+          <div className="font-bold text-gray-900 dark:text-white">Пополнить WC</div>
           <div className="text-xs text-gray-400">Курс: 1 ₽ = {RATE} WC</div>
         </div>
       </div>
@@ -145,7 +145,7 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
               className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all"
               style={active
                 ? { backgroundColor: "#25c666", color: "#fff", borderColor: "#25c666" }
-                : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
+                : { backgroundColor: "transparent", color: "#9ca3af", borderColor: "#374151" }
               }
             >
               {preset} WC
@@ -163,9 +163,9 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
               min={1}
               value={rub}
               onChange={e => setRub(Math.max(1, Number(e.target.value)))}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-900 font-semibold text-sm focus:outline-none transition-colors"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#0f1318] text-gray-900 dark:text-white font-semibold text-sm focus:outline-none transition-colors"
               onFocus={e => (e.currentTarget.style.borderColor = "#25c666")}
-              onBlur={e => (e.currentTarget.style.borderColor = "#e5e7eb")}
+              onBlur={e => (e.currentTarget.style.borderColor = "")}
             />
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">₽</span>
           </div>
@@ -173,7 +173,7 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
         <div>
           <label className="block text-xs text-gray-400 mb-1.5">Вы получаете</label>
           <div className="w-full px-4 py-3 rounded-xl border font-bold text-sm"
-            style={{ borderColor: "#25c666", backgroundColor: "#f0fdf4", color: "#25c666" }}>
+            style={{ borderColor: "#25c666", backgroundColor: "#1a2e20", color: "#25c666" }}>
             {wc.toLocaleString("ru-RU")} WC
           </div>
         </div>
@@ -206,10 +206,10 @@ function CartWidget({ items, onRemove, onClear }: {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
       {/* Панель корзины */}
       {open && (
-        <div className="w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden mb-1">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+        <div className="w-80 bg-white dark:bg-[#161b25] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 overflow-hidden mb-1">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-700">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-gray-900 text-sm">Корзина</span>
+              <span className="font-bold text-gray-900 dark:text-white text-sm">Корзина</span>
               {count > 0 && (
                 <span className="w-5 h-5 rounded-full text-white text-xs font-bold flex items-center justify-center"
                   style={{ backgroundColor: "#25c666" }}>
@@ -226,7 +226,7 @@ function CartWidget({ items, onRemove, onClear }: {
 
           {items.length === 0 ? (
             <div className="px-5 py-8 text-center">
-              <Icon name="ShoppingCart" size={32} className="text-gray-200 mx-auto mb-2" />
+              <Icon name="ShoppingCart" size={32} className="text-gray-600 dark:text-gray-700 mx-auto mb-2" />
               <p className="text-xs text-gray-400">Корзина пуста</p>
             </div>
           ) : (
@@ -236,25 +236,25 @@ function CartWidget({ items, onRemove, onClear }: {
                   <div key={item.id} className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2 min-w-0">
                       <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-                        style={{ backgroundColor: "#f0fdf4" }}>
+                        style={{ backgroundColor: "#1a2e20" }}>
                         <Icon name={item.icon} size={13} fallback="Package" style={{ color: "#25c666" }} />
                       </div>
-                      <span className="text-xs text-gray-700 truncate">{item.name}</span>
+                      <span className="text-xs text-gray-300 truncate">{item.name}</span>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-xs font-semibold text-gray-900">{item.price * item.qty} ₽</span>
+                      <span className="text-xs font-semibold text-white">{item.price * item.qty} ₽</span>
                       <button onClick={() => onRemove(item.id)}
-                        className="w-5 h-5 rounded-md flex items-center justify-center text-gray-300 hover:text-red-400 hover:bg-red-50 transition-colors">
+                        className="w-5 h-5 rounded-md flex items-center justify-center text-gray-500 hover:text-red-400 hover:bg-red-900/20 transition-colors">
                         <Icon name="X" size={12} />
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="px-5 py-4 border-t border-gray-100">
+              <div className="px-5 py-4 border-t border-gray-700">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs text-gray-500">Итого</span>
-                  <span className="font-bold text-gray-900">{total} ₽</span>
+                  <span className="text-xs text-gray-400">Итого</span>
+                  <span className="font-bold text-white">{total} ₽</span>
                 </div>
                 <button
                   className="w-full py-2.5 rounded-xl text-white font-semibold text-sm transition-colors"
@@ -341,7 +341,7 @@ export default function Donate() {
             </a>
             {cartCount > 0 && (
               <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium"
-                style={{ borderColor: "#25c666", color: "#25c666", backgroundColor: "#f0fdf4" }}>
+                style={{ borderColor: "#25c666", color: "#25c666", backgroundColor: "#1a2e20" }}>
                 <Icon name="ShoppingCart" size={14} style={{ color: "#25c666" }} />
                 <span>{cartCount}</span>
               </div>
@@ -355,14 +355,14 @@ export default function Donate() {
       {/* HERO */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-8 sm:pb-10 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-5 sm:mb-6"
-          style={{ backgroundColor: "#f0fdf4", borderColor: "#25c666" }}>
+          style={{ backgroundColor: "#1a2e20", borderColor: "#25c666" }}>
           <Icon name="Heart" size={12} style={{ color: "#25c666" }} />
-          <span className="text-xs font-medium" style={{ color: "#4a7a48" }}>Поддержи сервер</span>
+          <span className="text-xs font-medium" style={{ color: "#25c666" }}>Поддержи сервер</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
           Донат <span style={{ color: "#25c666" }}>WayWorlds</span>
         </h1>
-        <p className="text-gray-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+        <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
           Стартовые паки, донат-валюта WC и дополнительные услуги для твоего аккаунта.
         </p>
       </section>
@@ -370,7 +370,7 @@ export default function Donate() {
       {/* PACKS */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         <div className="text-center mb-8 sm:mb-10">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Стартовые паки</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Стартовые паки</h2>
           <p className="text-gray-400 text-sm">Выбери пак и начни игру с преимуществом</p>
         </div>
 
@@ -379,8 +379,8 @@ export default function Donate() {
             const inCart = cart.some(i => i.id === pack.id);
             return (
               <div key={pack.id}
-                className={`relative rounded-2xl p-5 sm:p-7 transition-all border bg-white ${
-                  inCart ? "border-[#25c666] shadow-lg" : "border-gray-100 hover:border-[#25c666]/50 hover:shadow-md"
+                className={`relative rounded-2xl p-5 sm:p-7 transition-all border bg-white dark:bg-[#161b25] ${
+                  inCart ? "border-[#25c666] shadow-lg" : "border-gray-100 dark:border-gray-800 hover:border-[#25c666]/50 hover:shadow-md"
                 }`}
               >
                 {pack.popular && (
@@ -391,26 +391,26 @@ export default function Donate() {
                 )}
                 <div className="flex items-center gap-3 mb-4 sm:mb-5">
                   <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+                    style={{ backgroundColor: "#1a2e20", border: "1px solid #25c666" }}>
                     <Icon name={pack.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
                   </div>
                   <div>
-                    <div className="font-bold text-gray-900">{pack.name}</div>
+                    <div className="font-bold text-gray-900 dark:text-white">{pack.name}</div>
                     <div className="text-xs text-gray-400">стартовый пак</div>
                   </div>
                   <div className="ml-auto sm:hidden">
-                    <span className="text-xl font-bold text-gray-900">{pack.price} ₽</span>
+                    <span className="text-xl font-bold text-gray-900 dark:text-white">{pack.price} ₽</span>
                   </div>
                 </div>
                 <div className="mb-4 sm:mb-6 hidden sm:block">
-                  <span className="text-3xl font-bold text-gray-900">{pack.price} ₽</span>
+                  <span className="text-3xl font-bold text-gray-900 dark:text-white">{pack.price} ₽</span>
                   <span className="text-gray-400 text-sm ml-1">/ разово</span>
                 </div>
                 <ul className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-7">
                   {pack.items.map((item) => (
-                    <li key={item.text} className="flex items-start gap-2.5 text-sm text-gray-600">
+                    <li key={item.text} className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-300">
                       <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-                        style={{ backgroundColor: "#f0fdf4" }}>
+                        style={{ backgroundColor: "#1a2e20" }}>
                         <Icon name={item.icon} size={13} fallback="Check" style={{ color: "#25c666" }} />
                       </div>
                       {item.text}
@@ -421,10 +421,10 @@ export default function Donate() {
                   className="w-full py-3 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                   style={inCart
                     ? { backgroundColor: "#25c666", color: "#fff" }
-                    : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
+                    : { backgroundColor: "#1a2e20", color: "#25c666", border: "1px solid #25c666" }
                   }
                   onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
-                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4")}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#1a2e20")}
                   onClick={() => addToCart({ id: pack.id, name: pack.name + " пак", price: pack.price, icon: pack.icon, qty: 1 })}
                 >
                   <Icon name={inCart ? "Check" : "ShoppingCart"} size={15} />
@@ -443,7 +443,7 @@ export default function Donate() {
           {/* WC Converter */}
           <div>
             <div className="mb-5 sm:mb-8">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Пополнить WC</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-1">Пополнить WC</h2>
               <p className="text-gray-400 text-sm">Донат-валюта для покупок внутри игры</p>
             </div>
             <WcConverter onAdd={addToCart} />
@@ -452,22 +452,22 @@ export default function Donate() {
           {/* Other */}
           <div>
             <div className="mb-5 sm:mb-8">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Другое</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-1">Другое</h2>
               <p className="text-gray-400 text-sm">Дополнительные услуги для аккаунта</p>
             </div>
             <div className="flex flex-col gap-4">
               {otherItems.map((item) => {
                 const inCart = cart.some(i => i.id === item.id);
                 return (
-                  <div key={item.label} className="bg-white rounded-2xl border border-gray-100 p-6 transition-all hover:border-[#25c666]/50 hover:shadow-md">
+                  <div key={item.label} className="bg-white dark:bg-[#161b25] rounded-2xl border border-gray-100 dark:border-gray-800 p-6 transition-all hover:border-[#25c666]/50 hover:shadow-md">
                     <div className="flex items-center justify-between gap-4 mb-3">
                       <div className="flex items-center gap-3">
                         <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                          style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+                          style={{ backgroundColor: "#1a2e20", border: "1px solid #25c666" }}>
                           <Icon name={item.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
                         </div>
                         <div>
-                          <div className="font-bold text-gray-900">{item.label}</div>
+                          <div className="font-bold text-gray-900 dark:text-white">{item.label}</div>
                           <div className="text-sm font-semibold" style={{ color: "#25c666" }}>{item.price} ₽</div>
                         </div>
                       </div>
@@ -475,10 +475,10 @@ export default function Donate() {
                         className="px-4 py-2 rounded-xl font-semibold text-sm transition-colors flex items-center gap-2 shrink-0"
                         style={inCart
                           ? { backgroundColor: "#25c666", color: "#fff" }
-                          : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
+                          : { backgroundColor: "#1a2e20", color: "#25c666", border: "1px solid #25c666" }
                         }
                         onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#1aaf55"; e.currentTarget.style.color = "#fff"; }}
-                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4"; e.currentTarget.style.color = inCart ? "#fff" : "#25c666"; }}
+                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#1a2e20"; e.currentTarget.style.color = inCart ? "#fff" : "#25c666"; }}
                         onClick={() => addToCart({ id: item.id, name: item.label, price: item.price, icon: item.icon, qty: 1 })}
                       >
                         <Icon name={inCart ? "Check" : "ShoppingCart"} size={14} />
@@ -486,9 +486,9 @@ export default function Donate() {
                       </button>
                     </div>
                     {item.note && (
-                      <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-50 border border-amber-200">
-                        <Icon name="AlertTriangle" size={13} className="text-amber-500 shrink-0 mt-0.5" />
-                        <p className="text-xs text-amber-700 leading-relaxed">{item.note}</p>
+                      <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-900/20 border border-amber-700/40">
+                        <Icon name="AlertTriangle" size={13} className="text-amber-400 shrink-0 mt-0.5" />
+                        <p className="text-xs text-amber-300 leading-relaxed">{item.note}</p>
                       </div>
                     )}
                   </div>
@@ -501,47 +501,47 @@ export default function Donate() {
 
       {/* OFFER */}
       <section id="offer-section" className="max-w-6xl mx-auto px-4 sm:px-6 pb-8 sm:pb-10">
-        <div className="bg-white rounded-2xl border border-gray-100 p-6">
+        <div className="bg-white dark:bg-[#161b25] rounded-2xl border border-gray-100 dark:border-gray-800 p-6">
           <button
             className="w-full flex items-center justify-between text-left"
             onClick={() => setOfferOpen(!offerOpen)}
           >
             <div className="flex items-center gap-2">
               <Icon name="FileText" size={16} className="text-gray-400" />
-              <span className="text-sm font-medium text-gray-600">Оферта и условия оплаты</span>
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Оферта и условия оплаты</span>
             </div>
             <Icon name={offerOpen ? "ChevronUp" : "ChevronDown"} size={16} className="text-gray-400" />
           </button>
           {offerOpen && (
-            <div className="mt-5 pt-5 border-t border-gray-100 text-xs text-gray-400 leading-relaxed space-y-4">
-              <p><strong className="text-gray-600">1. Общие положения</strong><br />
+            <div className="mt-5 pt-5 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-400 leading-relaxed space-y-4">
+              <p><strong className="text-gray-600 dark:text-gray-300">1. Общие положения</strong><br />
               Настоящая оферта регулирует условия приобретения внутриигровых товаров на сервере WayWorlds. Совершая оплату, вы подтверждаете согласие с настоящими условиями.</p>
-              <p><strong className="text-gray-600">2. Предмет договора</strong><br />
+              <p><strong className="text-gray-600 dark:text-gray-300">2. Предмет договора</strong><br />
               Администрация WayWorlds предоставляет виртуальные товары (валюту ВОН, донат-валюту WC, предметы, привилегии), не имеющие реальной денежной стоимости и не подлежащие обмену на реальные деньги.</p>
-              <p><strong className="text-gray-600">3. Курс и оплата</strong><br />
+              <p><strong className="text-gray-600 dark:text-gray-300">3. Курс и оплата</strong><br />
               Курс донат-валюты: 1 ₽ = 3,5 WC. Все цены в рублях РФ. После успешной оплаты товар начисляется в течение 5 минут.</p>
-              <p><strong className="text-gray-600">4. Возврат средств</strong><br />
+              <p><strong className="text-gray-600 dark:text-gray-300">4. Возврат средств</strong><br />
               Возврат возможен в течение 24 часов при условии, что товар не был использован. При перманентной блокировке аккаунта средства за разбан не возвращаются.</p>
-              <p><strong className="text-gray-600">5. Ответственность</strong><br />
+              <p><strong className="text-gray-600 dark:text-gray-300">5. Ответственность</strong><br />
               Администрация не несёт ответственности за потерю товаров вследствие нарушения правил сервера или блокировки аккаунта.</p>
-              <p><strong className="text-gray-600">6. Контакты</strong><br />
-              <a href="https://t.me/wayworlds" className="underline hover:text-gray-600">Telegram-поддержка</a> или <a href="mailto:admin@wayworlds.ru" className="underline hover:text-gray-600">admin@wayworlds.ru</a></p>
+              <p><strong className="text-gray-600 dark:text-gray-300">6. Контакты</strong><br />
+              <a href="https://t.me/wayworlds" className="underline hover:text-gray-300">Telegram-поддержка</a> или <a href="mailto:admin@wayworlds.ru" className="underline hover:text-gray-300">admin@wayworlds.ru</a></p>
             </div>
           )}
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-gray-100 bg-white py-8 px-4 sm:px-6">
+      <footer className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-[#0f1318] py-8 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <Link to="/" className="flex items-center gap-2">
             <img src={LOGO} alt="WayWorlds" className="w-6 h-6 object-contain" />
-            <span className="font-bold text-gray-900 text-sm">WayWorlds</span>
+            <span className="font-bold text-gray-900 dark:text-white text-sm">WayWorlds</span>
           </Link>
-          <p className="text-xs text-gray-300">© 2025 WayWorlds. Все права защищены.</p>
-          <div className="flex gap-5 text-xs text-gray-300">
-            <button onClick={scrollToOffer} className="hover:text-gray-500 transition-colors">Оферта оплаты</button>
-            <a href="#" className="hover:text-gray-500 transition-colors">Соглашение</a>
+          <p className="text-xs text-gray-400 dark:text-gray-600">© 2025 WayWorlds. Все права защищены.</p>
+          <div className="flex gap-5 text-xs text-gray-400 dark:text-gray-600">
+            <button onClick={scrollToOffer} className="hover:text-gray-500 dark:hover:text-gray-400 transition-colors">Оферта оплаты</button>
+            <a href="#" className="hover:text-gray-500 dark:hover:text-gray-400 transition-colors">Соглашение</a>
           </div>
         </div>
       </footer>

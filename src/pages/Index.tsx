@@ -167,17 +167,17 @@ export default function Index() {
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16 md:py-24 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div className="text-center md:text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-5 sm:mb-8"
-            style={{ backgroundColor: "#f0fdf4", borderColor: "#25c666" }}>
+            style={{ backgroundColor: "#1a2e20", borderColor: "#25c666" }}>
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: "#25c666" }} />
-            <span className="text-xs font-medium" style={{ color: "#4a7a48" }}>RolePlay сервер</span>
+            <span className="text-xs font-medium" style={{ color: "#25c666" }}>RolePlay сервер</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight mb-4">
             Добро пожаловать в{" "}
             <span style={{ color: "#25c666" }}>WayWorlds</span>
           </h1>
 
-          <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-md mx-auto md:mx-0">
+          <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-md mx-auto md:mx-0">
             Полная власть игроков, свобода действий, питомцы, катсцены с собственным сюжетом, машины.
             Участвуй в перестрелках, стань представителем закона или создай собственную ОПГ!
           </p>
@@ -197,7 +197,7 @@ export default function Index() {
               href="https://t.me/wayworlds"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 transition-all"
             >
               <Icon name="Send" size={16} />
               Телеграм
@@ -233,12 +233,12 @@ export default function Index() {
           {features.map((f) => (
             <div key={f.title} className="feature-card rounded-2xl p-5 sm:p-6 flex gap-4 sm:block">
               <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 sm:mb-5"
-                style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+                style={{ backgroundColor: "#1a2e20", border: "1px solid #25c666" }}>
                 <Icon name={f.icon} size={22} fallback="Star" style={{ color: "#25c666" }} />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 text-base sm:text-lg mb-1 sm:mb-2">{f.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white text-base sm:text-lg mb-1 sm:mb-2">{f.title}</h3>
+                <p className="text-gray-400 dark:text-gray-500 text-sm leading-relaxed">{f.desc}</p>
               </div>
             </div>
           ))}
