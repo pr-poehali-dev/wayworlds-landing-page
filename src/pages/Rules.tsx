@@ -41,9 +41,9 @@ export default function Rules() {
       {/* HERO */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-8 sm:pb-10 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-5 sm:mb-6"
-          style={{ backgroundColor: "#1a2e20", borderColor: "#25c666" }}>
+          style={{ backgroundColor: "#f0fdf4", borderColor: "#25c666" }}>
           <Icon name="BookOpen" size={12} style={{ color: "#25c666" }} />
-          <span className="text-xs font-medium" style={{ color: "#25c666" }}>Обязательно к прочтению</span>
+          <span className="text-xs font-medium" style={{ color: "#4a7a48" }}>Обязательно к прочтению</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
           Правила <span style={{ color: "#25c666" }}>WayWorlds</span>
@@ -57,7 +57,7 @@ export default function Rules() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-14 sm:pb-20">
         <div className="bg-white dark:bg-[#161b25] rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm min-h-[340px] sm:min-h-[480px] flex flex-col items-center justify-center gap-4 text-center p-8 sm:p-10">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #1a3a22 0%, #25c666 100%)" }}>
+            style={{ background: "linear-gradient(135deg, #a8edbe 0%, #25c666 100%)" }}>
             <Icon name="ScrollText" size={28} className="text-white" />
           </div>
           <h2 className="text-xl font-bold text-gray-700 dark:text-gray-200">Правила скоро появятся</h2>
@@ -69,7 +69,7 @@ export default function Rules() {
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-colors"
-            style={{ background: "linear-gradient(135deg, #1a3a22 0%, #25c666 100%)" }}
+            style={{ background: "linear-gradient(135deg, #a8edbe 0%, #25c666 100%)" }}
           >
             <Icon name="Send" size={14} className="text-white" />
             Telegram-канал

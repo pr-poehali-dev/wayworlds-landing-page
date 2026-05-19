@@ -125,7 +125,7 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
     <div className="bg-white dark:bg-[#161b25] rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm p-7">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-11 h-11 rounded-xl flex items-center justify-center"
-          style={{ backgroundColor: "#1a2e20", border: "1px solid #25c666" }}>
+          style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
           <Icon name="Gem" size={20} style={{ color: "#25c666" }} />
         </div>
         <div>
@@ -145,7 +145,7 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
               className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all"
               style={active
                 ? { backgroundColor: "#25c666", color: "#fff", borderColor: "#25c666" }
-                : { backgroundColor: "transparent", color: "#9ca3af", borderColor: "#374151" }
+                : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
               }
             >
               {preset} WC
@@ -173,7 +173,7 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
         <div>
           <label className="block text-xs text-gray-400 mb-1.5">Вы получаете</label>
           <div className="w-full px-4 py-3 rounded-xl border font-bold text-sm"
-            style={{ borderColor: "#25c666", backgroundColor: "#1a2e20", color: "#25c666" }}>
+            style={{ borderColor: "#25c666", backgroundColor: "#f0fdf4", color: "#25c666" }}>
             {wc.toLocaleString("ru-RU")} WC
           </div>
         </div>
@@ -236,7 +236,7 @@ function CartWidget({ items, onRemove, onClear }: {
                   <div key={item.id} className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2 min-w-0">
                       <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-                        style={{ backgroundColor: "#1a2e20" }}>
+                        style={{ backgroundColor: "#f0fdf4" }}>
                         <Icon name={item.icon} size={13} fallback="Package" style={{ color: "#25c666" }} />
                       </div>
                       <span className="text-xs text-gray-300 truncate">{item.name}</span>
@@ -341,7 +341,7 @@ export default function Donate() {
             </a>
             {cartCount > 0 && (
               <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium"
-                style={{ borderColor: "#25c666", color: "#25c666", backgroundColor: "#1a2e20" }}>
+                style={{ borderColor: "#25c666", color: "#25c666", backgroundColor: "#f0fdf4" }}>
                 <Icon name="ShoppingCart" size={14} style={{ color: "#25c666" }} />
                 <span>{cartCount}</span>
               </div>
@@ -355,9 +355,9 @@ export default function Donate() {
       {/* HERO */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-8 sm:pb-10 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-5 sm:mb-6"
-          style={{ backgroundColor: "#1a2e20", borderColor: "#25c666" }}>
+          style={{ backgroundColor: "#f0fdf4", borderColor: "#25c666" }}>
           <Icon name="Heart" size={12} style={{ color: "#25c666" }} />
-          <span className="text-xs font-medium" style={{ color: "#25c666" }}>Поддержи сервер</span>
+          <span className="text-xs font-medium" style={{ color: "#4a7a48" }}>Поддержи сервер</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
           Донат <span style={{ color: "#25c666" }}>WayWorlds</span>
@@ -391,7 +391,7 @@ export default function Donate() {
                 )}
                 <div className="flex items-center gap-3 mb-4 sm:mb-5">
                   <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: "#1a2e20", border: "1px solid #25c666" }}>
+                    style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
                     <Icon name={pack.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
                   </div>
                   <div>
@@ -410,7 +410,7 @@ export default function Donate() {
                   {pack.items.map((item) => (
                     <li key={item.text} className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-300">
                       <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-                        style={{ backgroundColor: "#1a2e20" }}>
+                        style={{ backgroundColor: "#f0fdf4" }}>
                         <Icon name={item.icon} size={13} fallback="Check" style={{ color: "#25c666" }} />
                       </div>
                       {item.text}
@@ -421,10 +421,10 @@ export default function Donate() {
                   className="w-full py-3 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                   style={inCart
                     ? { backgroundColor: "#25c666", color: "#fff" }
-                    : { backgroundColor: "#1a2e20", color: "#25c666", border: "1px solid #25c666" }
+                    : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
                   }
                   onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
-                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#1a2e20")}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4")}
                   onClick={() => addToCart({ id: pack.id, name: pack.name + " пак", price: pack.price, icon: pack.icon, qty: 1 })}
                 >
                   <Icon name={inCart ? "Check" : "ShoppingCart"} size={15} />
@@ -463,7 +463,7 @@ export default function Donate() {
                     <div className="flex items-center justify-between gap-4 mb-3">
                       <div className="flex items-center gap-3">
                         <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                          style={{ backgroundColor: "#1a2e20", border: "1px solid #25c666" }}>
+                          style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
                           <Icon name={item.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
                         </div>
                         <div>
@@ -475,10 +475,10 @@ export default function Donate() {
                         className="px-4 py-2 rounded-xl font-semibold text-sm transition-colors flex items-center gap-2 shrink-0"
                         style={inCart
                           ? { backgroundColor: "#25c666", color: "#fff" }
-                          : { backgroundColor: "#1a2e20", color: "#25c666", border: "1px solid #25c666" }
+                          : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
                         }
                         onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#1aaf55"; e.currentTarget.style.color = "#fff"; }}
-                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#1a2e20"; e.currentTarget.style.color = inCart ? "#fff" : "#25c666"; }}
+                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4"; e.currentTarget.style.color = inCart ? "#fff" : "#25c666"; }}
                         onClick={() => addToCart({ id: item.id, name: item.label, price: item.price, icon: item.icon, qty: 1 })}
                       >
                         <Icon name={inCart ? "Check" : "ShoppingCart"} size={14} />
@@ -486,9 +486,9 @@ export default function Donate() {
                       </button>
                     </div>
                     {item.note && (
-                      <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-900/20 border border-amber-700/40">
-                        <Icon name="AlertTriangle" size={13} className="text-amber-400 shrink-0 mt-0.5" />
-                        <p className="text-xs text-amber-300 leading-relaxed">{item.note}</p>
+                      <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/40">
+                        <Icon name="AlertTriangle" size={13} className="text-amber-500 dark:text-amber-400 shrink-0 mt-0.5" />
+                        <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">{item.note}</p>
                       </div>
                     )}
                   </div>
