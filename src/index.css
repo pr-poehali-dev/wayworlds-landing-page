@@ -65,8 +65,8 @@
 }
 
 .feature-card:hover {
-  border-color: #addfaa;
-  box-shadow: 0 4px 24px rgba(173, 223, 170, 0.15);
+  border-color: #25c666;
+  box-shadow: 0 4px 24px rgba(37, 198, 102, 0.15);
 }
 
 ::-webkit-scrollbar {
@@ -76,6 +76,6 @@
   background: #f8fafc;
 }
 ::-webkit-scrollbar-thumb {
-  background: #addfaa;
+  background: #25c666;
   border-radius: 3px;
 }

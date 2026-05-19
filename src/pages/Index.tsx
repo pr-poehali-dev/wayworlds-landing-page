@@ -90,7 +90,7 @@ export default function Index() {
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#addfaa" }}>
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#25c666" }}>
               <Icon name="Zap" size={14} className="text-white" />
             </div>
             <span className="font-bold text-gray-900 text-lg tracking-tight">WayWorlds</span>
@@ -117,14 +117,14 @@ export default function Index() {
         {/* Left */}
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-8"
-            style={{ backgroundColor: "#f0fdf4", borderColor: "#addfaa" }}>
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: "#addfaa" }} />
+            style={{ backgroundColor: "#f0fdf4", borderColor: "#25c666" }}>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: "#25c666" }} />
             <span className="text-xs font-medium" style={{ color: "#4a7a48" }}>RolePlay сервер</span>
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
             Добро пожаловать в{" "}
-            <span style={{ color: "#addfaa" }}>WayWorlds</span>
+            <span style={{ color: "#25c666" }}>WayWorlds</span>
           </h1>
 
           <p className="text-gray-500 text-base leading-relaxed mb-8 max-w-md">
@@ -135,9 +135,9 @@ export default function Index() {
           <div className="flex flex-wrap gap-3">
             <button
               className="flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition-colors shadow-sm"
-              style={{ backgroundColor: "#addfaa" }}
-              onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#96d393")}
-              onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#addfaa")}
+              style={{ backgroundColor: "#25c666" }}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
             >
               <Icon name="Play" size={16} className="text-white" />
               Начать играть
@@ -160,7 +160,7 @@ export default function Index() {
         <div className="relative flex justify-center">
           <div className="w-full max-w-md aspect-[4/3] rounded-2xl shadow-xl border border-gray-100 bg-gray-300" />
           <div className="absolute -bottom-4 left-8 flex items-center gap-2 bg-white rounded-xl px-4 py-2.5 shadow-lg border border-gray-100">
-            <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ backgroundColor: "#addfaa" }} />
+            <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ backgroundColor: "#25c666" }} />
             <span className="text-sm font-medium text-gray-700">847 онлайн</span>
           </div>
         </div>
@@ -186,8 +186,8 @@ export default function Index() {
           {features.map((f) => (
             <div key={f.title} className="feature-card rounded-2xl p-6">
               <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
-                style={{ backgroundColor: "#f0fdf4", border: "1px solid #addfaa" }}>
-                <Icon name={f.icon} size={22} fallback="Star" style={{ color: "#addfaa" }} />
+                style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+                <Icon name={f.icon} size={22} fallback="Star" style={{ color: "#25c666" }} />
               </div>
               <h3 className="font-semibold text-gray-900 text-lg mb-2">{f.title}</h3>
               <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
@@ -206,9 +206,9 @@ export default function Index() {
           <div className="text-center">
             <div
               className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer transition-colors shadow-md"
-              style={{ backgroundColor: "#addfaa" }}
-              onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#96d393")}
-              onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#addfaa")}
+              style={{ backgroundColor: "#25c666" }}
+              onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
+              onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
             >
               <Icon name="Play" size={28} className="text-white ml-1" />
             </div>
@@ -221,8 +221,8 @@ export default function Index() {
       <section id="subscribe" className="max-w-6xl mx-auto px-6 py-16">
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-10 md:p-14 text-center max-w-2xl mx-auto">
           <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-5"
-            style={{ backgroundColor: "#f0fdf4", border: "1px solid #addfaa" }}>
-            <Icon name="Bell" size={22} style={{ color: "#addfaa" }} />
+            style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+            <Icon name="Bell" size={22} style={{ color: "#25c666" }} />
           </div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Будь в курсе</h2>
           <p className="text-gray-400 mb-8 text-sm">
@@ -237,23 +237,23 @@ export default function Index() {
                 placeholder="твой@email.ru"
                 className="flex-1 px-4 py-3 rounded-xl border border-gray-200 text-gray-900 text-sm placeholder-gray-400 focus:outline-none transition-colors"
                 style={{ outline: "none" }}
-                onFocus={e => (e.currentTarget.style.borderColor = "#addfaa")}
+                onFocus={e => (e.currentTarget.style.borderColor = "#25c666")}
                 onBlur={e => (e.currentTarget.style.borderColor = "#e5e7eb")}
                 required
               />
               <button
                 type="submit"
                 className="px-6 py-3 rounded-xl text-white font-semibold text-sm transition-colors whitespace-nowrap shadow-sm"
-                style={{ backgroundColor: "#addfaa" }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#96d393")}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#addfaa")}
+                style={{ backgroundColor: "#25c666" }}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
               >
                 Подписаться
               </button>
             </form>
           ) : (
             <div className="flex items-center justify-center gap-2 py-2">
-              <Icon name="CheckCircle" size={20} style={{ color: "#addfaa" }} />
+              <Icon name="CheckCircle" size={20} style={{ color: "#25c666" }} />
               <span className="font-medium" style={{ color: "#4a7a48" }}>Ты подписан! Ждём тебя в игре</span>
             </div>
           )}
@@ -267,7 +267,7 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#addfaa" }}>
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#25c666" }}>
                   <Icon name="Zap" size={14} className="text-white" />
                 </div>
                 <span className="font-bold text-gray-900">WayWorlds</span>
