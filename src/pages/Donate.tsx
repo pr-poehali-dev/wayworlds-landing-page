@@ -258,27 +258,27 @@ export default function Donate() {
 
       {/* NAVBAR */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
-              <img src={LOGO} alt="WayWorlds" className="w-12 h-12 object-contain" />
+            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+              <img src={LOGO} alt="WayWorlds" className="w-8 h-8 sm:w-12 sm:h-12 object-contain" />
             </div>
-            <span className="font-bold text-gray-900 text-lg tracking-tight">WayWorlds</span>
+            <span className="font-bold text-gray-900 text-base sm:text-lg tracking-tight">WayWorlds</span>
           </Link>
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-500">
             <Link to="/" className="hover:text-gray-900 transition-colors">Возможности</Link>
             <Link to="/donate" className="font-medium transition-colors" style={{ color: "#25c666" }}>Донат</Link>
             <Link to="/rules" className="hover:text-gray-900 transition-colors">Правила</Link>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <a
               href="https://t.me/wayworlds"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm hover:border-gray-300 hover:bg-gray-50 transition-all"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm hover:border-gray-300 hover:bg-gray-50 transition-all"
             >
               <Icon name="Send" size={14} />
-              Telegram
+              <span className="hidden sm:inline">Telegram</span>
             </a>
             {cartCount > 0 && (
               <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium"
@@ -292,33 +292,33 @@ export default function Donate() {
       </nav>
 
       {/* HERO */}
-      <section className="max-w-6xl mx-auto px-6 pt-16 pb-10 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-6"
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-8 sm:pb-10 text-center">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-5 sm:mb-6"
           style={{ backgroundColor: "#f0fdf4", borderColor: "#25c666" }}>
           <Icon name="Heart" size={12} style={{ color: "#25c666" }} />
           <span className="text-xs font-medium" style={{ color: "#4a7a48" }}>Поддержи сервер</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
           Донат <span style={{ color: "#25c666" }}>WayWorlds</span>
         </h1>
-        <p className="text-gray-500 text-base max-w-xl mx-auto leading-relaxed">
+        <p className="text-gray-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
           Стартовые паки, донат-валюта WC и дополнительные услуги для твоего аккаунта.
         </p>
       </section>
 
       {/* PACKS */}
-      <section className="max-w-6xl mx-auto px-6 py-10">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Стартовые паки</h2>
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+        <div className="text-center mb-8 sm:mb-10">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Стартовые паки</h2>
           <p className="text-gray-400 text-sm">Выбери пак и начни игру с преимуществом</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           {packs.map((pack) => {
             const inCart = cart.some(i => i.id === pack.id);
             return (
               <div key={pack.id}
-                className={`relative rounded-2xl p-7 transition-all border bg-white ${
+                className={`relative rounded-2xl p-5 sm:p-7 transition-all border bg-white ${
                   inCart ? "border-[#25c666] shadow-lg" : "border-gray-100 hover:border-[#25c666]/50 hover:shadow-md"
                 }`}
               >
@@ -328,8 +328,8 @@ export default function Donate() {
                       style={{ backgroundColor: "#25c666" }}>Популярный</span>
                   </div>
                 )}
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center"
+                <div className="flex items-center gap-3 mb-4 sm:mb-5">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
                     style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
                     <Icon name={pack.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
                   </div>
@@ -337,12 +337,15 @@ export default function Donate() {
                     <div className="font-bold text-gray-900">{pack.name}</div>
                     <div className="text-xs text-gray-400">стартовый пак</div>
                   </div>
+                  <div className="ml-auto sm:hidden">
+                    <span className="text-xl font-bold text-gray-900">{pack.price} ₽</span>
+                  </div>
                 </div>
-                <div className="mb-6">
+                <div className="mb-4 sm:mb-6 hidden sm:block">
                   <span className="text-3xl font-bold text-gray-900">{pack.price} ₽</span>
                   <span className="text-gray-400 text-sm ml-1">/ разово</span>
                 </div>
-                <ul className="space-y-3 mb-7">
+                <ul className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-7">
                   {pack.items.map((item) => (
                     <li key={item.text} className="flex items-start gap-2.5 text-sm text-gray-600">
                       <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
@@ -373,13 +376,13 @@ export default function Donate() {
       </section>
 
       {/* WC + OTHER — side by side */}
-      <section className="max-w-6xl mx-auto px-6 py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-start">
 
           {/* WC Converter */}
           <div>
-            <div className="mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">Пополнить WC</h2>
+            <div className="mb-5 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Пополнить WC</h2>
               <p className="text-gray-400 text-sm">Донат-валюта для покупок внутри игры</p>
             </div>
             <WcConverter onAdd={addToCart} />
@@ -387,8 +390,8 @@ export default function Donate() {
 
           {/* Other */}
           <div>
-            <div className="mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">Другое</h2>
+            <div className="mb-5 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">Другое</h2>
               <p className="text-gray-400 text-sm">Дополнительные услуги для аккаунта</p>
             </div>
             <div className="flex flex-col gap-4">
@@ -436,7 +439,7 @@ export default function Donate() {
       </section>
 
       {/* OFFER */}
-      <section id="offer-section" className="max-w-6xl mx-auto px-6 pb-10">
+      <section id="offer-section" className="max-w-6xl mx-auto px-4 sm:px-6 pb-8 sm:pb-10">
         <div className="bg-white rounded-2xl border border-gray-100 p-6">
           <button
             className="w-full flex items-center justify-between text-left"
@@ -468,8 +471,8 @@ export default function Donate() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-gray-100 bg-white py-8 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-gray-100 bg-white py-8 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <Link to="/" className="flex items-center gap-2">
             <img src={LOGO} alt="WayWorlds" className="w-6 h-6 object-contain" />
             <span className="font-bold text-gray-900 text-sm">WayWorlds</span>
