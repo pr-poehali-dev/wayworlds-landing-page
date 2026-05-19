@@ -41,6 +41,21 @@ const packs = [
   },
 ];
 
+const otherItems = [
+  {
+    icon: "UserCheck",
+    label: "Смена ФИ",
+    price: 50,
+    note: null,
+  },
+  {
+    icon: "ShieldCheck",
+    label: "Разбан",
+    price: 250,
+    note: "Если был перманентный бан — деньги не возвращаем",
+  },
+];
+
 const wcPresets = [100, 250, 500, 1000, 2500, 5000];
 const RATE = 3.5;
 
@@ -255,6 +270,45 @@ export default function Donate() {
           <p className="text-gray-400 text-sm">Донат-валюта для покупок внутри игры</p>
         </div>
         <WcConverter />
+      </section>
+
+      {/* OTHER */}
+      <section className="max-w-6xl mx-auto px-6 py-10">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Другое</h2>
+          <p className="text-gray-400 text-sm">Дополнительные услуги для вашего аккаунта</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
+          {otherItems.map((item) => (
+            <div key={item.label} className="feature-card rounded-2xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+                  <Icon name={item.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
+                </div>
+                <div>
+                  <div className="font-bold text-gray-900">{item.label}</div>
+                  <div className="text-sm font-semibold" style={{ color: "#25c666" }}>{item.price} ₽</div>
+                </div>
+              </div>
+              {item.note && (
+                <div className="flex items-start gap-2 mb-4 p-3 rounded-xl bg-amber-50 border border-amber-200">
+                  <Icon name="AlertTriangle" size={14} className="text-amber-500 shrink-0 mt-0.5" />
+                  <p className="text-xs text-amber-700 leading-relaxed">{item.note}</p>
+                </div>
+              )}
+              <button
+                className="w-full py-2.5 rounded-xl font-semibold text-sm transition-colors"
+                style={{ backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }}
+                onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#25c666"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={e => { e.currentTarget.style.backgroundColor = "#f0fdf4"; e.currentTarget.style.color = "#25c666"; }}
+              >
+                Купить за {item.price} ₽
+              </button>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* OFFER */}
