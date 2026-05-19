@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
 const features = [
@@ -64,8 +65,6 @@ function OnlineCounter({ animate }: { animate: boolean }) {
 }
 
 export default function Index() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
 
@@ -77,11 +76,6 @@ export default function Index() {
     if (statsRef.current) observer.observe(statsRef.current);
     return () => observer.disconnect();
   }, []);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) setSubmitted(true);
-  };
 
   return (
     <div className="min-h-screen bg-[#f8fafb] text-gray-900">
@@ -97,8 +91,7 @@ export default function Index() {
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-500">
             <a href="#features" className="hover:text-gray-900 transition-colors">Возможности</a>
-            <a href="#video" className="hover:text-gray-900 transition-colors">Геймплей</a>
-            <a href="#subscribe" className="hover:text-gray-900 transition-colors">Подписка</a>
+            <Link to="/donate" className="hover:text-gray-900 transition-colors">Донат</Link>
           </div>
           <a
             href="https://t.me/wayworlds"
@@ -114,7 +107,6 @@ export default function Index() {
 
       {/* HERO */}
       <section className="max-w-6xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
-        {/* Left */}
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-8"
             style={{ backgroundColor: "#f0fdf4", borderColor: "#25c666" }}>
@@ -157,16 +149,12 @@ export default function Index() {
         </div>
 
         {/* Right — grey placeholder */}
-        <div className="relative flex justify-center">
+        <div className="flex justify-center">
           <div className="w-full max-w-md aspect-[4/3] rounded-2xl shadow-xl border border-gray-100 bg-gray-300" />
-          <div className="absolute -bottom-4 left-8 flex items-center gap-2 bg-white rounded-xl px-4 py-2.5 shadow-lg border border-gray-100">
-            <span className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ backgroundColor: "#25c666" }} />
-            <span className="text-sm font-medium text-gray-700">847 онлайн</span>
-          </div>
         </div>
       </section>
 
-      {/* STATS — only online counter */}
+      {/* STATS */}
       <section className="max-w-6xl mx-auto px-6 py-8" ref={statsRef}>
         <OnlineCounter animate={statsVisible} />
       </section>
@@ -196,71 +184,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* VIDEO */}
-      <section id="video" className="max-w-6xl mx-auto px-6 py-12">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Смотри геймплей</h2>
-          <p className="text-gray-400">Живые моменты из мира WayWorlds</p>
-        </div>
-        <div className="relative rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-white aspect-video flex items-center justify-center">
-          <div className="text-center">
-            <div
-              className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer transition-colors shadow-md"
-              style={{ backgroundColor: "#25c666" }}
-              onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
-              onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
-            >
-              <Icon name="Play" size={28} className="text-white ml-1" />
-            </div>
-            <p className="text-gray-400 text-sm">Скажи мне ссылку на YouTube — вставлю видео сюда</p>
-          </div>
-        </div>
-      </section>
-
-      {/* SUBSCRIBE */}
-      <section id="subscribe" className="max-w-6xl mx-auto px-6 py-16">
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-10 md:p-14 text-center max-w-2xl mx-auto">
-          <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-5"
-            style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
-            <Icon name="Bell" size={22} style={{ color: "#25c666" }} />
-          </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Будь в курсе</h2>
-          <p className="text-gray-400 mb-8 text-sm">
-            Подпишись на обновления — узнай первым об ивентах, патчах и новых возможностях
-          </p>
-          {!submitted ? (
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="твой@email.ru"
-                className="flex-1 px-4 py-3 rounded-xl border border-gray-200 text-gray-900 text-sm placeholder-gray-400 focus:outline-none transition-colors"
-                style={{ outline: "none" }}
-                onFocus={e => (e.currentTarget.style.borderColor = "#25c666")}
-                onBlur={e => (e.currentTarget.style.borderColor = "#e5e7eb")}
-                required
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 rounded-xl text-white font-semibold text-sm transition-colors whitespace-nowrap shadow-sm"
-                style={{ backgroundColor: "#25c666" }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
-              >
-                Подписаться
-              </button>
-            </form>
-          ) : (
-            <div className="flex items-center justify-center gap-2 py-2">
-              <Icon name="CheckCircle" size={20} style={{ color: "#25c666" }} />
-              <span className="font-medium" style={{ color: "#4a7a48" }}>Ты подписан! Ждём тебя в игре</span>
-            </div>
-          )}
-          <p className="text-xs text-gray-300 mt-4">Никакого спама — только важные новости</p>
-        </div>
-      </section>
-
       {/* FOOTER */}
       <footer className="border-t border-gray-100 bg-white py-12 px-6">
         <div className="max-w-6xl mx-auto">
@@ -280,8 +203,7 @@ export default function Index() {
               <h4 className="font-semibold text-gray-700 mb-4 text-sm">Навигация</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li><a href="#features" className="hover:text-gray-700 transition-colors">Возможности</a></li>
-                <li><a href="#video" className="hover:text-gray-700 transition-colors">Геймплей</a></li>
-                <li><a href="#subscribe" className="hover:text-gray-700 transition-colors">Подписка</a></li>
+                <li><Link to="/donate" className="hover:text-gray-700 transition-colors">Донат</Link></li>
                 <li><a href="#" className="hover:text-gray-700 transition-colors">Правила сервера</a></li>
               </ul>
             </div>
