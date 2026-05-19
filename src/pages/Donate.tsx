@@ -2,10 +2,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
+type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  icon: string;
+  qty: number;
+};
+
 const packs = [
   {
     id: "pack1",
-    name: "Стартовый",
+    name: "Стартовый пак",
     price: 250,
     icon: "Rocket",
     popular: false,
@@ -17,7 +25,7 @@ const packs = [
   },
   {
     id: "pack2",
-    name: "Продвинутый",
+    name: "Продвинутый пак",
     price: 500,
     icon: "Zap",
     popular: true,
@@ -29,7 +37,7 @@ const packs = [
   },
   {
     id: "pack3",
-    name: "Элитный",
+    name: "Элитный пак",
     price: 899,
     icon: "Crown",
     popular: false,
@@ -42,24 +50,14 @@ const packs = [
 ];
 
 const otherItems = [
-  {
-    icon: "UserCheck",
-    label: "Смена ФИ",
-    price: 50,
-    note: null,
-  },
-  {
-    icon: "ShieldCheck",
-    label: "Разбан",
-    price: 250,
-    note: "Если был перманентный бан — деньги не возвращаем",
-  },
+  { id: "rename", icon: "UserCheck", label: "Смена ФИ", price: 50, note: null },
+  { id: "unban", icon: "ShieldCheck", label: "Разбан", price: 250, note: "Если был перманентный бан — деньги не возвращаем" },
 ];
 
 const wcPresets = [100, 250, 500, 1000, 2500, 5000];
 const RATE = 3.5;
 
-function WcConverter() {
+function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
   const [rub, setRub] = useState(100);
   const wc = Math.floor(rub * RATE);
 
@@ -127,23 +125,115 @@ function WcConverter() {
         style={{ backgroundColor: "#25c666" }}
         onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
         onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
+        onClick={() => onAdd({ id: `wc-${rub}`, name: `${wc.toLocaleString("ru-RU")} WC`, price: rub, icon: "Gem", qty: 1 })}
       >
-        Пополнить на {wc.toLocaleString("ru-RU")} WC
+        В корзину — {wc.toLocaleString("ru-RU")} WC
       </button>
     </div>
   );
 }
 
+function Cart({ items, onRemove, onClear }: {
+  items: CartItem[];
+  onRemove: (id: string) => void;
+  onClear: () => void;
+}) {
+  const total = items.reduce((s, i) => s + i.price * i.qty, 0);
+  const count = items.reduce((s, i) => s + i.qty, 0);
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 w-80">
+      <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+          <div className="flex items-center gap-2">
+            <Icon name="ShoppingCart" size={18} className="text-gray-700" />
+            <span className="font-bold text-gray-900 text-sm">Корзина</span>
+            {count > 0 && (
+              <span className="w-5 h-5 rounded-full text-white text-xs font-bold flex items-center justify-center"
+                style={{ backgroundColor: "#25c666" }}>
+                {count}
+              </span>
+            )}
+          </div>
+          {items.length > 0 && (
+            <button onClick={onClear} className="text-xs text-gray-400 hover:text-red-500 transition-colors">
+              Очистить
+            </button>
+          )}
+        </div>
+
+        {/* Items */}
+        {items.length === 0 ? (
+          <div className="px-5 py-8 text-center">
+            <Icon name="ShoppingCart" size={32} className="text-gray-200 mx-auto mb-2" />
+            <p className="text-xs text-gray-400">Корзина пуста</p>
+          </div>
+        ) : (
+          <>
+            <div className="max-h-52 overflow-y-auto px-5 py-3 space-y-2">
+              {items.map((item) => (
+                <div key={item.id} className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: "#f0fdf4" }}>
+                      <Icon name={item.icon} size={13} fallback="Package" style={{ color: "#25c666" }} />
+                    </div>
+                    <span className="text-xs text-gray-700 truncate">{item.name}</span>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="text-xs font-semibold text-gray-900">{(item.price * item.qty)} ₽</span>
+                    <button onClick={() => onRemove(item.id)}
+                      className="w-5 h-5 rounded-md flex items-center justify-center text-gray-300 hover:text-red-400 hover:bg-red-50 transition-colors">
+                      <Icon name="X" size={12} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="px-5 py-4 border-t border-gray-100">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs text-gray-500">Итого</span>
+                <span className="font-bold text-gray-900">{total} ₽</span>
+              </div>
+              <button
+                className="w-full py-2.5 rounded-xl text-white font-semibold text-sm transition-colors"
+                style={{ backgroundColor: "#25c666" }}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
+              >
+                Оплатить {total} ₽
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function Donate() {
-  const [selectedPack, setSelectedPack] = useState<string | null>(null);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [offerOpen, setOfferOpen] = useState(false);
+
+  const addToCart = (item: CartItem) => {
+    setCart(prev => {
+      const existing = prev.find(i => i.id === item.id);
+      if (existing) return prev.map(i => i.id === item.id ? { ...i, qty: i.qty + 1 } : i);
+      return [...prev, item];
+    });
+  };
+
+  const removeFromCart = (id: string) => setCart(prev => prev.filter(i => i.id !== id));
+  const clearCart = () => setCart([]);
 
   const scrollToOffer = () => {
     setOfferOpen(true);
-    setTimeout(() => {
-      document.getElementById("offer-section")?.scrollIntoView({ behavior: "smooth" });
-    }, 50);
+    setTimeout(() => document.getElementById("offer-section")?.scrollIntoView({ behavior: "smooth" }), 50);
   };
+
+  const cartCount = cart.reduce((s, i) => s + i.qty, 0);
 
   return (
     <div className="min-h-screen bg-[#f8fafb] text-gray-900">
@@ -161,15 +251,27 @@ export default function Donate() {
             <Link to="/" className="hover:text-gray-900 transition-colors">Возможности</Link>
             <Link to="/donate" className="font-medium transition-colors" style={{ color: "#25c666" }}>Донат</Link>
           </div>
-          <a
-            href="https://t.me/wayworlds"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm hover:border-gray-300 hover:bg-gray-50 transition-all"
-          >
-            <Icon name="Send" size={14} />
-            Telegram
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://t.me/wayworlds"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm hover:border-gray-300 hover:bg-gray-50 transition-all"
+            >
+              <Icon name="Send" size={14} />
+              Telegram
+            </a>
+            {/* Cart counter in nav */}
+            {cartCount > 0 && (
+              <div className="relative">
+                <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium"
+                  style={{ borderColor: "#25c666", color: "#25c666", backgroundColor: "#f0fdf4" }}>
+                  <Icon name="ShoppingCart" size={14} style={{ color: "#25c666" }} />
+                  <span>{cartCount}</span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
 
@@ -197,23 +299,18 @@ export default function Donate() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {packs.map((pack) => {
-            const isSelected = selectedPack === pack.id;
+            const inCart = cart.some(i => i.id === pack.id);
             return (
               <div
                 key={pack.id}
-                onClick={() => setSelectedPack(pack.id)}
-                className={`relative rounded-2xl p-7 cursor-pointer transition-all border bg-white ${
-                  isSelected
-                    ? "border-[#25c666] shadow-lg"
-                    : "border-gray-100 hover:border-[#25c666]/50 hover:shadow-md"
+                className={`relative rounded-2xl p-7 transition-all border bg-white ${
+                  inCart ? "border-[#25c666] shadow-lg" : "border-gray-100 hover:border-[#25c666]/50 hover:shadow-md"
                 }`}
               >
                 {pack.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <span className="px-3 py-1 rounded-full text-xs font-semibold text-white shadow-sm"
-                      style={{ backgroundColor: "#25c666" }}>
-                      Популярный
-                    </span>
+                      style={{ backgroundColor: "#25c666" }}>Популярный</span>
                   </div>
                 )}
 
@@ -246,16 +343,17 @@ export default function Donate() {
                 </ul>
 
                 <button
-                  className="w-full py-3 rounded-xl font-semibold text-sm transition-colors"
-                  style={
-                    isSelected || pack.popular
-                      ? { backgroundColor: "#25c666", color: "#fff" }
-                      : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
+                  className="w-full py-3 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+                  style={inCart
+                    ? { backgroundColor: "#25c666", color: "#fff" }
+                    : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
                   }
                   onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
-                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = isSelected || pack.popular ? "#25c666" : "#f0fdf4")}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4")}
+                  onClick={() => addToCart({ id: pack.id, name: pack.name, price: pack.price, icon: pack.icon, qty: 1 })}
                 >
-                  Купить за {pack.price} ₽
+                  <Icon name={inCart ? "Check" : "ShoppingCart"} size={15} />
+                  {inCart ? "В корзине" : `В корзину — ${pack.price} ₽`}
                 </button>
               </div>
             );
@@ -269,7 +367,7 @@ export default function Donate() {
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Пополнить WC</h2>
           <p className="text-gray-400 text-sm">Донат-валюта для покупок внутри игры</p>
         </div>
-        <WcConverter />
+        <WcConverter onAdd={addToCart} />
       </section>
 
       {/* OTHER */}
@@ -280,34 +378,42 @@ export default function Donate() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
-          {otherItems.map((item) => (
-            <div key={item.label} className="feature-card rounded-2xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
-                  <Icon name={item.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
+          {otherItems.map((item) => {
+            const inCart = cart.some(i => i.id === item.id);
+            return (
+              <div key={item.label} className="feature-card rounded-2xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+                    <Icon name={item.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-900">{item.label}</div>
+                    <div className="text-sm font-semibold" style={{ color: "#25c666" }}>{item.price} ₽</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-bold text-gray-900">{item.label}</div>
-                  <div className="text-sm font-semibold" style={{ color: "#25c666" }}>{item.price} ₽</div>
-                </div>
+                {item.note && (
+                  <div className="flex items-start gap-2 mb-4 p-3 rounded-xl bg-amber-50 border border-amber-200">
+                    <Icon name="AlertTriangle" size={14} className="text-amber-500 shrink-0 mt-0.5" />
+                    <p className="text-xs text-amber-700 leading-relaxed">{item.note}</p>
+                  </div>
+                )}
+                <button
+                  className="w-full py-2.5 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+                  style={inCart
+                    ? { backgroundColor: "#25c666", color: "#fff", border: "1px solid #25c666" }
+                    : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
+                  }
+                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#1aaf55"; e.currentTarget.style.color = "#fff"; }}
+                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4"; e.currentTarget.style.color = inCart ? "#fff" : "#25c666"; }}
+                  onClick={() => addToCart({ id: item.id, name: item.label, price: item.price, icon: item.icon, qty: 1 })}
+                >
+                  <Icon name={inCart ? "Check" : "ShoppingCart"} size={14} />
+                  {inCart ? "В корзине" : `В корзину — ${item.price} ₽`}
+                </button>
               </div>
-              {item.note && (
-                <div className="flex items-start gap-2 mb-4 p-3 rounded-xl bg-amber-50 border border-amber-200">
-                  <Icon name="AlertTriangle" size={14} className="text-amber-500 shrink-0 mt-0.5" />
-                  <p className="text-xs text-amber-700 leading-relaxed">{item.note}</p>
-                </div>
-              )}
-              <button
-                className="w-full py-2.5 rounded-xl font-semibold text-sm transition-colors"
-                style={{ backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#25c666"; e.currentTarget.style.color = "#fff"; }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = "#f0fdf4"; e.currentTarget.style.color = "#25c666"; }}
-              >
-                Купить за {item.price} ₽
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -329,19 +435,14 @@ export default function Donate() {
             <div className="mt-5 pt-5 border-t border-gray-100 text-xs text-gray-400 leading-relaxed space-y-4">
               <p><strong className="text-gray-600">1. Общие положения</strong><br />
               Настоящая оферта регулирует условия приобретения внутриигровых товаров на сервере WayWorlds. Совершая оплату, вы подтверждаете согласие с настоящими условиями.</p>
-
               <p><strong className="text-gray-600">2. Предмет договора</strong><br />
               Администрация WayWorlds предоставляет виртуальные товары (внутриигровую валюту ВОН, донат-валюту WC, предметы, привилегии), не имеющие реальной денежной стоимости и не подлежащие обмену на реальные деньги.</p>
-
               <p><strong className="text-gray-600">3. Курс и оплата</strong><br />
-              Курс донат-валюты: 1 ₽ = 3,5 WC. Все цены указаны в рублях РФ. Оплата производится через защищённые платёжные системы. После успешной оплаты товар начисляется на аккаунт в течение 5 минут. При технических сбоях — обратитесь в поддержку.</p>
-
+              Курс донат-валюты: 1 ₽ = 3,5 WC. Все цены указаны в рублях РФ. Оплата производится через защищённые платёжные системы. После успешной оплаты товар начисляется на аккаунт в течение 5 минут.</p>
               <p><strong className="text-gray-600">4. Возврат средств</strong><br />
-              Возврат возможен в течение 24 часов с момента покупки при условии, что виртуальный товар не был использован. Для оформления возврата обратитесь в поддержку через Telegram.</p>
-
+              Возврат возможен в течение 24 часов с момента покупки при условии, что товар не был использован. При перманентной блокировке аккаунта средства за разбан не возвращаются. Для возврата обратитесь в поддержку через Telegram.</p>
               <p><strong className="text-gray-600">5. Ответственность</strong><br />
               Администрация не несёт ответственности за потерю товаров вследствие нарушения правил сервера, блокировки аккаунта или передачи данных третьим лицам.</p>
-
               <p><strong className="text-gray-600">6. Контакты</strong><br />
               По вопросам оплаты и возврата: <a href="https://t.me/wayworlds" className="underline hover:text-gray-600">Telegram-поддержка</a> или <a href="mailto:admin@wayworlds.ru" className="underline hover:text-gray-600">admin@wayworlds.ru</a></p>
             </div>
@@ -360,13 +461,14 @@ export default function Donate() {
           </Link>
           <p className="text-xs text-gray-300">© 2025 WayWorlds. Все права защищены.</p>
           <div className="flex gap-5 text-xs text-gray-300">
-            <button onClick={scrollToOffer} className="hover:text-gray-500 transition-colors">
-              Оферта оплаты
-            </button>
+            <button onClick={scrollToOffer} className="hover:text-gray-500 transition-colors">Оферта оплаты</button>
             <a href="#" className="hover:text-gray-500 transition-colors">Соглашение</a>
           </div>
         </div>
       </footer>
+
+      {/* FLOATING CART */}
+      <Cart items={cart} onRemove={removeFromCart} onClear={clearCart} />
     </div>
   );
 }
