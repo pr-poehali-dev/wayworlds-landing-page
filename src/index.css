@@ -54,6 +54,17 @@
     @apply bg-background text-foreground;
     font-family: "Inter", "Roboto", sans-serif;
   }
+
+  .dark body,
+  .dark {
+    --background: 222 20% 10%;
+    --foreground: 210 20% 95%;
+    --card: 222 20% 13%;
+    --card-foreground: 210 20% 95%;
+    --border: 222 15% 20%;
+    --muted: 222 15% 17%;
+    --muted-foreground: 210 10% 60%;
+  }
 }
 
 .feature-card {
@@ -62,6 +73,11 @@
     border-color 0.2s ease;
   border: 1px solid #e5e7eb;
   background: #ffffff;
+}
+
+.dark .feature-card {
+  border-color: #2a2f3a;
+  background: #161b25;
 }
 
 .feature-card:hover {
@@ -78,4 +94,8 @@
 ::-webkit-scrollbar-thumb {
   background: #25c666;
   border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #161b25;
 }

@@ -1,40 +1,39 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import MobileNav from "@/components/MobileNav";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const LOGO = "https://cdn.poehali.dev/files/61189b8c-3707-4976-99de-7498b29f1bce.png";
 
 export default function Rules() {
   return (
-    <div className="min-h-screen bg-[#f8fafb] text-gray-900 pb-16 md:pb-0">
+    <div className="min-h-screen bg-[#f8fafb] dark:bg-[#0f1318] text-gray-900 dark:text-gray-100 pb-16 md:pb-0">
 
       {/* NAVBAR */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
+      <nav className="sticky top-0 z-50 bg-white/80 dark:bg-[#0f1318]/90 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center shrink-0">
               <img src={LOGO} alt="WayWorlds" className="w-8 h-8 sm:w-12 sm:h-12 object-contain" />
             </div>
-            <span className="font-bold text-gray-900 text-base sm:text-lg tracking-tight">WayWorlds</span>
+            <span className="font-bold text-gray-900 dark:text-white text-base sm:text-lg tracking-tight">WayWorlds</span>
           </Link>
-          <div className="hidden md:flex items-center gap-8 text-sm text-gray-500">
-            <Link to="/" className="hover:text-gray-900 transition-colors">Возможности</Link>
-            <Link to="/donate" className="hover:text-gray-900 transition-colors">Донат</Link>
+          <div className="hidden md:flex items-center gap-8 text-sm text-gray-500 dark:text-gray-400">
+            <Link to="/" className="hover:text-gray-900 dark:hover:text-white transition-colors">Возможности</Link>
+            <Link to="/donate" className="hover:text-gray-900 dark:hover:text-white transition-colors">Донат</Link>
             <Link to="/rules" className="font-medium transition-colors" style={{ color: "#25c666" }}>Правила</Link>
           </div>
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <a
               href="https://t.me/wayworlds"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border border-gray-200 text-gray-600 text-sm hover:border-gray-300 hover:bg-gray-50 transition-all"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
             >
               <Icon name="Send" size={14} />
               <span className="hidden sm:inline">Telegram</span>
             </a>
-            <div className="flex md:hidden">
-              <Link to="/donate" className="px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">Донат</Link>
-            </div>
           </div>
         </div>
       </nav>
