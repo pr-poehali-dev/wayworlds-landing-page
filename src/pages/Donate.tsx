@@ -328,7 +328,7 @@ export default function Donate() {
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <a
-              href="https://t.me/wayworlds"
+              href="https://t.me/Fuck11ngHero1n"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
@@ -518,7 +518,7 @@ export default function Donate() {
               <p><strong className="text-gray-600 dark:text-gray-300">5. Ответственность</strong><br />
               Администрация не несёт ответственности за потерю товаров вследствие нарушения правил сервера или блокировки аккаунта.</p>
               <p><strong className="text-gray-600 dark:text-gray-300">6. Контакты</strong><br />
-              <a href="https://t.me/wayworlds" className="underline hover:text-gray-300">Telegram-поддержка</a> или <a href="mailto:admin@wayworlds.ru" className="underline hover:text-gray-300">admin@wayworlds.ru</a></p>
+              <a href="https://t.me/Fuck11ngHero1n" className="underline hover:text-gray-300">Telegram-поддержка</a> или <a href="mailto:wayworlds0@gmail.com" className="underline hover:text-gray-300">wayworlds0@gmail.com</a></p>
             </div>
           )}
         </div>

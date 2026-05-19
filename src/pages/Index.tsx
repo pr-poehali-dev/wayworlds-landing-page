@@ -151,7 +151,7 @@ export default function Index() {
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <a
-              href="https://t.me/wayworlds"
+              href="https://t.me/Fuck11ngHero1n"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
@@ -193,7 +193,7 @@ export default function Index() {
               {copied ? `IP скопирован!` : "Начать играть"}
             </button>
             <a
-              href="https://t.me/wayworlds"
+              href="https://t.me/Fuck11ngHero1n"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 transition-all"
@@ -267,17 +267,17 @@ export default function Index() {
             <div>
               <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-3 text-sm">Контакты</h4>
               <div className="flex flex-col gap-2.5">
-                <a href="https://t.me/wayworlds" target="_blank" rel="noopener noreferrer"
+                <a href="https://t.me/Fuck11ngHero1n" target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors">
                   <Icon name="Send" size={14} />Telegram
                 </a>
-                <a href="https://discord.gg/wayworlds" target="_blank" rel="noopener noreferrer"
+                <a href="https://discord.gg/7Jqrd9s7mc" target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors">
                   <Icon name="MessageSquare" size={14} />Discord
                 </a>
-                <a href="mailto:admin@wayworlds.ru"
+                <a href="mailto:wayworlds0@gmail.com"
                   className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors">
-                  <Icon name="Mail" size={14} /><span className="truncate">admin@wayworlds.ru</span>
+                  <Icon name="Mail" size={14} /><span className="truncate">wayworlds0@gmail.com</span>
                 </a>
               </div>
             </div>

@@ -26,7 +26,7 @@ export default function Rules() {
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <a
-              href="https://t.me/wayworlds"
+              href="https://t.me/Fuck11ngHero1n"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
@@ -64,7 +64,7 @@ export default function Rules() {
             Администрация готовит список правил. Следи за обновлениями в Telegram-канале.
           </p>
           <a
-            href="https://t.me/wayworlds"
+            href="https://t.me/Fuck11ngHero1n"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold transition-colors"
