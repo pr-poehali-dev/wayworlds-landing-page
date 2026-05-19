@@ -66,9 +66,18 @@ function OnlineCounter({ animate }: { animate: boolean }) {
   );
 }
 
+const SERVER_IP = "WayWorlds.ru";
+
 export default function Index() {
   const [statsVisible, setStatsVisible] = useState(false);
+  const [copied, setCopied] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
+
+  const copyIP = () => {
+    navigator.clipboard.writeText(SERVER_IP);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -129,13 +138,14 @@ export default function Index() {
 
           <div className="flex flex-wrap gap-3">
             <button
-              className="flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition-colors shadow-sm"
-              style={{ backgroundColor: "#25c666" }}
-              onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
-              onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
+              onClick={copyIP}
+              className="flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition-all shadow-sm"
+              style={{ backgroundColor: copied ? "#1aaf55" : "#25c666" }}
+              onMouseEnter={e => { if (!copied) e.currentTarget.style.backgroundColor = "#1aaf55"; }}
+              onMouseLeave={e => { if (!copied) e.currentTarget.style.backgroundColor = "#25c666"; }}
             >
-              <Icon name="Play" size={16} className="text-white" />
-              Начать играть
+              <Icon name={copied ? "Check" : "Copy"} size={16} className="text-white" />
+              {copied ? `IP скопирован!` : "Начать играть"}
             </button>
             <a
               href="https://t.me/wayworlds"
