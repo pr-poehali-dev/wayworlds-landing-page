@@ -65,7 +65,7 @@ function useCountUp(target: number, duration = 1500, start = false) {
   return count;
 }
 
-function OnlineCounter({ online, maxPlayers, status }: { online: number; maxPlayers: number; status: string }) {
+function OnlineCounter({ online, status }: { online: number; maxPlayers: number; status: string }) {
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -78,22 +78,58 @@ function OnlineCounter({ online, maxPlayers, status }: { online: number; maxPlay
   }, []);
 
   const count = useCountUp(online, 1500, visible);
+  const isOnline = status === "ok";
 
   return (
-    <div ref={ref} className="bg-white dark:bg-[#161b25] rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm flex items-center justify-center px-10 py-5 gap-4">
-      <div className="relative">
-        <Icon name="Users" size={22} className="text-gray-400" />
-        {status === "ok" && (
-          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-green-400 border-2 border-white dark:border-[#161b25]" />
-        )}
-      </div>
-      <div className="flex flex-col items-center gap-0.5">
-        <span className="text-3xl font-bold text-gray-900 dark:text-white">
-          {status === "offline" ? "—" : count.toLocaleString("ru-RU")}
-        </span>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          {status === "offline" ? "Сервер недоступен" : `Игроков онлайн${maxPlayers ? ` / ${maxPlayers}` : ""}`}
-        </span>
+    <div ref={ref} className="bg-white dark:bg-[#161b25] rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm px-6 sm:px-10 py-5">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+
+        {/* Онлайн */}
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <div className="w-12 h-12 rounded-xl icon-green-bg flex items-center justify-center">
+              <Icon name="Users" size={22} style={{ color: "#25c666" }} />
+            </div>
+            <span className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-white dark:border-[#161b25] ${isOnline ? "bg-green-400" : "bg-gray-400"}`} />
+          </div>
+          <div>
+            <div className="text-3xl font-bold text-gray-900 dark:text-white leading-none">
+              {status === "offline" ? "—" : status === "loading" ? "..." : count.toLocaleString("ru-RU")}
+            </div>
+            <div className="text-sm text-gray-400 mt-0.5">
+              {status === "offline" ? "Сервер недоступен" : "игроков онлайн прямо сейчас"}
+            </div>
+          </div>
+        </div>
+
+        {/* Разделитель */}
+        <div className="hidden sm:block w-px h-10 bg-gray-100 dark:bg-gray-800" />
+
+        {/* IP */}
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl icon-green-bg flex items-center justify-center">
+            <Icon name="Globe" size={22} style={{ color: "#25c666" }} />
+          </div>
+          <div>
+            <div className="text-lg font-bold text-gray-900 dark:text-white leading-none">WayWorlds.ru</div>
+            <div className="text-sm text-gray-400 mt-0.5">IP-адрес сервера</div>
+          </div>
+        </div>
+
+        {/* Разделитель */}
+        <div className="hidden sm:block w-px h-10 bg-gray-100 dark:bg-gray-800" />
+
+        {/* Версия */}
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl icon-green-bg flex items-center justify-center">
+            <Icon name="Gamepad2" size={22} style={{ color: "#25c666" }} />
+          </div>
+          <div>
+            <div className="text-lg font-bold text-gray-900 dark:text-white leading-none">1.0.0</div>
+            <div className="text-sm text-gray-400 mt-0.5">версия сервера</div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
@@ -203,7 +239,7 @@ export default function Index() {
             </a>
           </div>
 
-          <p className="mt-5 text-xs text-gray-400 text-center md:text-left">версия 1.0.0</p>
+
         </div>
 
         {/* Right — grey placeholder */}
