@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
+const LOGO = "https://cdn.poehali.dev/files/61189b8c-3707-4976-99de-7498b29f1bce.png";
+
 type CartItem = {
   id: string;
   name: string;
@@ -13,7 +15,7 @@ type CartItem = {
 const packs = [
   {
     id: "pack1",
-    name: "Стартовый пак",
+    name: "Стартовый",
     price: 250,
     icon: "Rocket",
     popular: false,
@@ -25,7 +27,7 @@ const packs = [
   },
   {
     id: "pack2",
-    name: "Продвинутый пак",
+    name: "Продвинутый",
     price: 500,
     icon: "Zap",
     popular: true,
@@ -37,7 +39,7 @@ const packs = [
   },
   {
     id: "pack3",
-    name: "Элитный пак",
+    name: "Элитный",
     price: 899,
     icon: "Crown",
     popular: false,
@@ -62,7 +64,7 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
   const wc = Math.floor(rub * RATE);
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-7 max-w-xl mx-auto">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-7">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-11 h-11 rounded-xl flex items-center justify-center"
           style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
@@ -83,10 +85,9 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
               key={preset}
               onClick={() => setRub(presetRub)}
               className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all"
-              style={
-                active
-                  ? { backgroundColor: "#25c666", color: "#fff", borderColor: "#25c666" }
-                  : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
+              style={active
+                ? { backgroundColor: "#25c666", color: "#fff", borderColor: "#25c666" }
+                : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
               }
             >
               {preset} WC
@@ -121,94 +122,111 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
       </div>
 
       <button
-        className="w-full py-3 rounded-xl text-white font-semibold text-sm transition-colors"
+        className="w-full py-3 rounded-xl text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2"
         style={{ backgroundColor: "#25c666" }}
         onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
         onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
         onClick={() => onAdd({ id: `wc-${rub}`, name: `${wc.toLocaleString("ru-RU")} WC`, price: rub, icon: "Gem", qty: 1 })}
       >
+        <Icon name="ShoppingCart" size={15} className="text-white" />
         В корзину — {wc.toLocaleString("ru-RU")} WC
       </button>
     </div>
   );
 }
 
-function Cart({ items, onRemove, onClear }: {
+function CartWidget({ items, onRemove, onClear }: {
   items: CartItem[];
   onRemove: (id: string) => void;
   onClear: () => void;
 }) {
+  const [open, setOpen] = useState(false);
   const total = items.reduce((s, i) => s + i.price * i.qty, 0);
   const count = items.reduce((s, i) => s + i.qty, 0);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-80">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-          <div className="flex items-center gap-2">
-            <Icon name="ShoppingCart" size={18} className="text-gray-700" />
-            <span className="font-bold text-gray-900 text-sm">Корзина</span>
-            {count > 0 && (
-              <span className="w-5 h-5 rounded-full text-white text-xs font-bold flex items-center justify-center"
-                style={{ backgroundColor: "#25c666" }}>
-                {count}
-              </span>
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+      {/* Панель корзины */}
+      {open && (
+        <div className="w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden mb-1">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-gray-900 text-sm">Корзина</span>
+              {count > 0 && (
+                <span className="w-5 h-5 rounded-full text-white text-xs font-bold flex items-center justify-center"
+                  style={{ backgroundColor: "#25c666" }}>
+                  {count}
+                </span>
+              )}
+            </div>
+            {items.length > 0 && (
+              <button onClick={onClear} className="text-xs text-gray-400 hover:text-red-500 transition-colors">
+                Очистить
+              </button>
             )}
           </div>
-          {items.length > 0 && (
-            <button onClick={onClear} className="text-xs text-gray-400 hover:text-red-500 transition-colors">
-              Очистить
-            </button>
+
+          {items.length === 0 ? (
+            <div className="px-5 py-8 text-center">
+              <Icon name="ShoppingCart" size={32} className="text-gray-200 mx-auto mb-2" />
+              <p className="text-xs text-gray-400">Корзина пуста</p>
+            </div>
+          ) : (
+            <>
+              <div className="max-h-52 overflow-y-auto px-5 py-3 space-y-2">
+                {items.map((item) => (
+                  <div key={item.id} className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                        style={{ backgroundColor: "#f0fdf4" }}>
+                        <Icon name={item.icon} size={13} fallback="Package" style={{ color: "#25c666" }} />
+                      </div>
+                      <span className="text-xs text-gray-700 truncate">{item.name}</span>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-xs font-semibold text-gray-900">{item.price * item.qty} ₽</span>
+                      <button onClick={() => onRemove(item.id)}
+                        className="w-5 h-5 rounded-md flex items-center justify-center text-gray-300 hover:text-red-400 hover:bg-red-50 transition-colors">
+                        <Icon name="X" size={12} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="px-5 py-4 border-t border-gray-100">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs text-gray-500">Итого</span>
+                  <span className="font-bold text-gray-900">{total} ₽</span>
+                </div>
+                <button
+                  className="w-full py-2.5 rounded-xl text-white font-semibold text-sm transition-colors"
+                  style={{ backgroundColor: "#25c666" }}
+                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
+                >
+                  Оплатить {total} ₽
+                </button>
+              </div>
+            </>
           )}
         </div>
+      )}
 
-        {/* Items */}
-        {items.length === 0 ? (
-          <div className="px-5 py-8 text-center">
-            <Icon name="ShoppingCart" size={32} className="text-gray-200 mx-auto mb-2" />
-            <p className="text-xs text-gray-400">Корзина пуста</p>
-          </div>
-        ) : (
-          <>
-            <div className="max-h-52 overflow-y-auto px-5 py-3 space-y-2">
-              {items.map((item) => (
-                <div key={item.id} className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: "#f0fdf4" }}>
-                      <Icon name={item.icon} size={13} fallback="Package" style={{ color: "#25c666" }} />
-                    </div>
-                    <span className="text-xs text-gray-700 truncate">{item.name}</span>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-xs font-semibold text-gray-900">{(item.price * item.qty)} ₽</span>
-                    <button onClick={() => onRemove(item.id)}
-                      className="w-5 h-5 rounded-md flex items-center justify-center text-gray-300 hover:text-red-400 hover:bg-red-50 transition-colors">
-                      <Icon name="X" size={12} />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="px-5 py-4 border-t border-gray-100">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs text-gray-500">Итого</span>
-                <span className="font-bold text-gray-900">{total} ₽</span>
-              </div>
-              <button
-                className="w-full py-2.5 rounded-xl text-white font-semibold text-sm transition-colors"
-                style={{ backgroundColor: "#25c666" }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
-              >
-                Оплатить {total} ₽
-              </button>
-            </div>
-          </>
+      {/* Кнопка-кружок */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="relative w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all"
+        style={{ backgroundColor: "#25c666" }}
+        onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
+        onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25c666")}
+      >
+        <Icon name={open ? "X" : "ShoppingCart"} size={22} className="text-white" />
+        {count > 0 && !open && (
+          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center shadow-sm">
+            {count}
+          </span>
         )}
-      </div>
+      </button>
     </div>
   );
 }
@@ -242,9 +260,7 @@ export default function Donate() {
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#25c666" }}>
-              <Icon name="Zap" size={14} className="text-white" />
-            </div>
+            <img src={LOGO} alt="WayWorlds" className="w-8 h-8 object-contain" />
             <span className="font-bold text-gray-900 text-lg tracking-tight">WayWorlds</span>
           </Link>
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-500">
@@ -261,14 +277,11 @@ export default function Donate() {
               <Icon name="Send" size={14} />
               Telegram
             </a>
-            {/* Cart counter in nav */}
             {cartCount > 0 && (
-              <div className="relative">
-                <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium"
-                  style={{ borderColor: "#25c666", color: "#25c666", backgroundColor: "#f0fdf4" }}>
-                  <Icon name="ShoppingCart" size={14} style={{ color: "#25c666" }} />
-                  <span>{cartCount}</span>
-                </div>
+              <div className="flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium"
+                style={{ borderColor: "#25c666", color: "#25c666", backgroundColor: "#f0fdf4" }}>
+                <Icon name="ShoppingCart" size={14} style={{ color: "#25c666" }} />
+                <span>{cartCount}</span>
               </div>
             )}
           </div>
@@ -286,7 +299,7 @@ export default function Donate() {
           Донат <span style={{ color: "#25c666" }}>WayWorlds</span>
         </h1>
         <p className="text-gray-500 text-base max-w-xl mx-auto leading-relaxed">
-          Стартовые паки для быстрого начала игры и пополнение донат-валюты WC.
+          Стартовые паки, донат-валюта WC и дополнительные услуги для твоего аккаунта.
         </p>
       </section>
 
@@ -301,8 +314,7 @@ export default function Donate() {
           {packs.map((pack) => {
             const inCart = cart.some(i => i.id === pack.id);
             return (
-              <div
-                key={pack.id}
+              <div key={pack.id}
                 className={`relative rounded-2xl p-7 transition-all border bg-white ${
                   inCart ? "border-[#25c666] shadow-lg" : "border-gray-100 hover:border-[#25c666]/50 hover:shadow-md"
                 }`}
@@ -313,7 +325,6 @@ export default function Donate() {
                       style={{ backgroundColor: "#25c666" }}>Популярный</span>
                   </div>
                 )}
-
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-11 h-11 rounded-xl flex items-center justify-center"
                     style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
@@ -324,12 +335,10 @@ export default function Donate() {
                     <div className="text-xs text-gray-400">стартовый пак</div>
                   </div>
                 </div>
-
                 <div className="mb-6">
                   <span className="text-3xl font-bold text-gray-900">{pack.price} ₽</span>
                   <span className="text-gray-400 text-sm ml-1">/ разово</span>
                 </div>
-
                 <ul className="space-y-3 mb-7">
                   {pack.items.map((item) => (
                     <li key={item.text} className="flex items-start gap-2.5 text-sm text-gray-600">
@@ -341,7 +350,6 @@ export default function Donate() {
                     </li>
                   ))}
                 </ul>
-
                 <button
                   className="w-full py-3 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                   style={inCart
@@ -350,7 +358,7 @@ export default function Donate() {
                   }
                   onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
                   onMouseLeave={e => (e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4")}
-                  onClick={() => addToCart({ id: pack.id, name: pack.name, price: pack.price, icon: pack.icon, qty: 1 })}
+                  onClick={() => addToCart({ id: pack.id, name: pack.name + " пак", price: pack.price, icon: pack.icon, qty: 1 })}
                 >
                   <Icon name={inCart ? "Check" : "ShoppingCart"} size={15} />
                   {inCart ? "В корзине" : `В корзину — ${pack.price} ₽`}
@@ -361,59 +369,66 @@ export default function Donate() {
         </div>
       </section>
 
-      {/* WC CONVERTER */}
+      {/* WC + OTHER — side by side */}
       <section className="max-w-6xl mx-auto px-6 py-10">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Пополнить WC</h2>
-          <p className="text-gray-400 text-sm">Донат-валюта для покупок внутри игры</p>
-        </div>
-        <WcConverter onAdd={addToCart} />
-      </section>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
 
-      {/* OTHER */}
-      <section className="max-w-6xl mx-auto px-6 py-10">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Другое</h2>
-          <p className="text-gray-400 text-sm">Дополнительные услуги для вашего аккаунта</p>
-        </div>
+          {/* WC Converter */}
+          <div>
+            <div className="mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">Пополнить WC</h2>
+              <p className="text-gray-400 text-sm">Донат-валюта для покупок внутри игры</p>
+            </div>
+            <WcConverter onAdd={addToCart} />
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
-          {otherItems.map((item) => {
-            const inCart = cart.some(i => i.id === item.id);
-            return (
-              <div key={item.label} className="feature-card rounded-2xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
-                    <Icon name={item.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
+          {/* Other */}
+          <div>
+            <div className="mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">Другое</h2>
+              <p className="text-gray-400 text-sm">Дополнительные услуги для аккаунта</p>
+            </div>
+            <div className="flex flex-col gap-4">
+              {otherItems.map((item) => {
+                const inCart = cart.some(i => i.id === item.id);
+                return (
+                  <div key={item.label} className="bg-white rounded-2xl border border-gray-100 p-6 transition-all hover:border-[#25c666]/50 hover:shadow-md">
+                    <div className="flex items-center justify-between gap-4 mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                          style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+                          <Icon name={item.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
+                        </div>
+                        <div>
+                          <div className="font-bold text-gray-900">{item.label}</div>
+                          <div className="text-sm font-semibold" style={{ color: "#25c666" }}>{item.price} ₽</div>
+                        </div>
+                      </div>
+                      <button
+                        className="px-4 py-2 rounded-xl font-semibold text-sm transition-colors flex items-center gap-2 shrink-0"
+                        style={inCart
+                          ? { backgroundColor: "#25c666", color: "#fff" }
+                          : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
+                        }
+                        onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#1aaf55"; e.currentTarget.style.color = "#fff"; }}
+                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4"; e.currentTarget.style.color = inCart ? "#fff" : "#25c666"; }}
+                        onClick={() => addToCart({ id: item.id, name: item.label, price: item.price, icon: item.icon, qty: 1 })}
+                      >
+                        <Icon name={inCart ? "Check" : "ShoppingCart"} size={14} />
+                        {inCart ? "В корзине" : "Добавить"}
+                      </button>
+                    </div>
+                    {item.note && (
+                      <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-50 border border-amber-200">
+                        <Icon name="AlertTriangle" size={13} className="text-amber-500 shrink-0 mt-0.5" />
+                        <p className="text-xs text-amber-700 leading-relaxed">{item.note}</p>
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <div className="font-bold text-gray-900">{item.label}</div>
-                    <div className="text-sm font-semibold" style={{ color: "#25c666" }}>{item.price} ₽</div>
-                  </div>
-                </div>
-                {item.note && (
-                  <div className="flex items-start gap-2 mb-4 p-3 rounded-xl bg-amber-50 border border-amber-200">
-                    <Icon name="AlertTriangle" size={14} className="text-amber-500 shrink-0 mt-0.5" />
-                    <p className="text-xs text-amber-700 leading-relaxed">{item.note}</p>
-                  </div>
-                )}
-                <button
-                  className="w-full py-2.5 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center gap-2"
-                  style={inCart
-                    ? { backgroundColor: "#25c666", color: "#fff", border: "1px solid #25c666" }
-                    : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
-                  }
-                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#1aaf55"; e.currentTarget.style.color = "#fff"; }}
-                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4"; e.currentTarget.style.color = inCart ? "#fff" : "#25c666"; }}
-                  onClick={() => addToCart({ id: item.id, name: item.label, price: item.price, icon: item.icon, qty: 1 })}
-                >
-                  <Icon name={inCart ? "Check" : "ShoppingCart"} size={14} />
-                  {inCart ? "В корзине" : `В корзину — ${item.price} ₽`}
-                </button>
-              </div>
-            );
-          })}
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -430,21 +445,20 @@ export default function Donate() {
             </div>
             <Icon name={offerOpen ? "ChevronUp" : "ChevronDown"} size={16} className="text-gray-400" />
           </button>
-
           {offerOpen && (
             <div className="mt-5 pt-5 border-t border-gray-100 text-xs text-gray-400 leading-relaxed space-y-4">
               <p><strong className="text-gray-600">1. Общие положения</strong><br />
               Настоящая оферта регулирует условия приобретения внутриигровых товаров на сервере WayWorlds. Совершая оплату, вы подтверждаете согласие с настоящими условиями.</p>
               <p><strong className="text-gray-600">2. Предмет договора</strong><br />
-              Администрация WayWorlds предоставляет виртуальные товары (внутриигровую валюту ВОН, донат-валюту WC, предметы, привилегии), не имеющие реальной денежной стоимости и не подлежащие обмену на реальные деньги.</p>
+              Администрация WayWorlds предоставляет виртуальные товары (валюту ВОН, донат-валюту WC, предметы, привилегии), не имеющие реальной денежной стоимости и не подлежащие обмену на реальные деньги.</p>
               <p><strong className="text-gray-600">3. Курс и оплата</strong><br />
-              Курс донат-валюты: 1 ₽ = 3,5 WC. Все цены указаны в рублях РФ. Оплата производится через защищённые платёжные системы. После успешной оплаты товар начисляется на аккаунт в течение 5 минут.</p>
+              Курс донат-валюты: 1 ₽ = 3,5 WC. Все цены в рублях РФ. После успешной оплаты товар начисляется в течение 5 минут.</p>
               <p><strong className="text-gray-600">4. Возврат средств</strong><br />
-              Возврат возможен в течение 24 часов с момента покупки при условии, что товар не был использован. При перманентной блокировке аккаунта средства за разбан не возвращаются. Для возврата обратитесь в поддержку через Telegram.</p>
+              Возврат возможен в течение 24 часов при условии, что товар не был использован. При перманентной блокировке аккаунта средства за разбан не возвращаются.</p>
               <p><strong className="text-gray-600">5. Ответственность</strong><br />
-              Администрация не несёт ответственности за потерю товаров вследствие нарушения правил сервера, блокировки аккаунта или передачи данных третьим лицам.</p>
+              Администрация не несёт ответственности за потерю товаров вследствие нарушения правил сервера или блокировки аккаунта.</p>
               <p><strong className="text-gray-600">6. Контакты</strong><br />
-              По вопросам оплаты и возврата: <a href="https://t.me/wayworlds" className="underline hover:text-gray-600">Telegram-поддержка</a> или <a href="mailto:admin@wayworlds.ru" className="underline hover:text-gray-600">admin@wayworlds.ru</a></p>
+              <a href="https://t.me/wayworlds" className="underline hover:text-gray-600">Telegram-поддержка</a> или <a href="mailto:admin@wayworlds.ru" className="underline hover:text-gray-600">admin@wayworlds.ru</a></p>
             </div>
           )}
         </div>
@@ -454,9 +468,7 @@ export default function Donate() {
       <footer className="border-t border-gray-100 bg-white py-8 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#25c666" }}>
-              <Icon name="Zap" size={12} className="text-white" />
-            </div>
+            <img src={LOGO} alt="WayWorlds" className="w-6 h-6 object-contain" />
             <span className="font-bold text-gray-900 text-sm">WayWorlds</span>
           </Link>
           <p className="text-xs text-gray-300">© 2025 WayWorlds. Все права защищены.</p>
@@ -468,7 +480,7 @@ export default function Donate() {
       </footer>
 
       {/* FLOATING CART */}
-      <Cart items={cart} onRemove={removeFromCart} onClear={clearCart} />
+      <CartWidget items={cart} onRemove={removeFromCart} onClear={clearCart} />
     </div>
   );
 }

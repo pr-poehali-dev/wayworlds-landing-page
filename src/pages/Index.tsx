@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
+const LOGO = "https://cdn.poehali.dev/files/61189b8c-3707-4976-99de-7498b29f1bce.png";
+
 const features = [
   {
     icon: "Home",
@@ -84,9 +86,7 @@ export default function Index() {
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#25c666" }}>
-              <Icon name="Zap" size={14} className="text-white" />
-            </div>
+            <img src={LOGO} alt="WayWorlds" className="w-8 h-8 object-contain" />
             <span className="font-bold text-gray-900 text-lg tracking-tight">WayWorlds</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-500">
@@ -190,9 +190,7 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#25c666" }}>
-                  <Icon name="Zap" size={14} className="text-white" />
-                </div>
+                <img src={LOGO} alt="WayWorlds" className="w-7 h-7 object-contain" />
                 <span className="font-bold text-gray-900">WayWorlds</span>
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">
