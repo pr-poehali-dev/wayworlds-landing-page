@@ -40,8 +40,7 @@ export default function Rules() {
 
       {/* HERO */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-8 sm:pb-10 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-5 sm:mb-6"
-          style={{ backgroundColor: "#f0fdf4", borderColor: "#25c666" }}>
+        <div className="badge-green inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5 sm:mb-6">
           <Icon name="BookOpen" size={12} style={{ color: "#25c666" }} />
           <span className="text-xs font-medium" style={{ color: "#4a7a48" }}>Обязательно к прочтению</span>
         </div>

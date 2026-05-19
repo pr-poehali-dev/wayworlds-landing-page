@@ -85,6 +85,45 @@
   box-shadow: 0 4px 24px rgba(37, 198, 102, 0.15);
 }
 
+/* Иконки и бейджи с зелёным фоном — адаптируются к теме */
+.icon-green-bg {
+  background-color: #f0fdf4;
+  border: 1px solid #25c666;
+}
+
+.dark .icon-green-bg {
+  background-color: #1a2e20;
+  border: 1px solid #25c666;
+}
+
+/* Бейджи (badge) с зелёным фоном */
+.badge-green {
+  background-color: #f0fdf4;
+  border: 1px solid #25c666;
+}
+
+.dark .badge-green {
+  background-color: #1a2e20;
+  border: 1px solid #25c666;
+}
+
+.dark .badge-green span {
+  color: #4ade80 !important;
+}
+
+/* Кнопки и поля «получаете» с зелёным фоном */
+.field-green {
+  background-color: #f0fdf4;
+  border: 1px solid #25c666;
+  color: #25c666;
+}
+
+.dark .field-green {
+  background-color: #1a2e20;
+  border: 1px solid #25c666;
+  color: #25c666;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }

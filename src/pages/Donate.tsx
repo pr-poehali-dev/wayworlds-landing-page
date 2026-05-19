@@ -124,8 +124,7 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
   return (
     <div className="bg-white dark:bg-[#161b25] rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm p-7">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-11 h-11 rounded-xl flex items-center justify-center"
-          style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+        <div className="icon-green-bg w-11 h-11 rounded-xl flex items-center justify-center">
           <Icon name="Gem" size={20} style={{ color: "#25c666" }} />
         </div>
         <div>
@@ -145,7 +144,7 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
               className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all"
               style={active
                 ? { backgroundColor: "#25c666", color: "#fff", borderColor: "#25c666" }
-                : { backgroundColor: "#f9fafb", color: "#374151", borderColor: "#e5e7eb" }
+                : { backgroundColor: "transparent", color: "#6b7280", borderColor: "#d1d5db" }
               }
             >
               {preset} WC
@@ -172,8 +171,7 @@ function WcConverter({ onAdd }: { onAdd: (item: CartItem) => void }) {
         </div>
         <div>
           <label className="block text-xs text-gray-400 mb-1.5">Вы получаете</label>
-          <div className="w-full px-4 py-3 rounded-xl border font-bold text-sm"
-            style={{ borderColor: "#25c666", backgroundColor: "#f0fdf4", color: "#25c666" }}>
+          <div className="field-green w-full px-4 py-3 rounded-xl font-bold text-sm">
             {wc.toLocaleString("ru-RU")} WC
           </div>
         </div>
@@ -235,8 +233,7 @@ function CartWidget({ items, onRemove, onClear }: {
                 {items.map((item) => (
                   <div key={item.id} className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-                        style={{ backgroundColor: "#f0fdf4" }}>
+                      <div className="icon-green-bg w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ border: "none" }}>
                         <Icon name={item.icon} size={13} fallback="Package" style={{ color: "#25c666" }} />
                       </div>
                       <span className="text-xs text-gray-300 truncate">{item.name}</span>
@@ -354,8 +351,7 @@ export default function Donate() {
 
       {/* HERO */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-8 sm:pb-10 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-5 sm:mb-6"
-          style={{ backgroundColor: "#f0fdf4", borderColor: "#25c666" }}>
+        <div className="badge-green inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5 sm:mb-6">
           <Icon name="Heart" size={12} style={{ color: "#25c666" }} />
           <span className="text-xs font-medium" style={{ color: "#4a7a48" }}>Поддержи сервер</span>
         </div>
@@ -390,8 +386,7 @@ export default function Donate() {
                   </div>
                 )}
                 <div className="flex items-center gap-3 mb-4 sm:mb-5">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+                  <div className="icon-green-bg w-11 h-11 rounded-xl flex items-center justify-center shrink-0">
                     <Icon name={pack.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
                   </div>
                   <div>
@@ -409,8 +404,7 @@ export default function Donate() {
                 <ul className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-7">
                   {pack.items.map((item) => (
                     <li key={item.text} className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-300">
-                      <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-                        style={{ backgroundColor: "#f0fdf4" }}>
+                      <div className="icon-green-bg w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style={{ border: "none" }}>
                         <Icon name={item.icon} size={13} fallback="Check" style={{ color: "#25c666" }} />
                       </div>
                       {item.text}
@@ -421,10 +415,10 @@ export default function Donate() {
                   className="w-full py-3 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center gap-2"
                   style={inCart
                     ? { backgroundColor: "#25c666", color: "#fff" }
-                    : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
+                    : { backgroundColor: "transparent", color: "#25c666", border: "1px solid #25c666" }
                   }
                   onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1aaf55")}
-                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4")}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "transparent")}
                   onClick={() => addToCart({ id: pack.id, name: pack.name + " пак", price: pack.price, icon: pack.icon, qty: 1 })}
                 >
                   <Icon name={inCart ? "Check" : "ShoppingCart"} size={15} />
@@ -462,8 +456,7 @@ export default function Donate() {
                   <div key={item.label} className="bg-white dark:bg-[#161b25] rounded-2xl border border-gray-100 dark:border-gray-800 p-6 transition-all hover:border-[#25c666]/50 hover:shadow-md">
                     <div className="flex items-center justify-between gap-4 mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                          style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+                        <div className="icon-green-bg w-11 h-11 rounded-xl flex items-center justify-center shrink-0">
                           <Icon name={item.icon} size={20} fallback="Star" style={{ color: "#25c666" }} />
                         </div>
                         <div>
@@ -475,10 +468,10 @@ export default function Donate() {
                         className="px-4 py-2 rounded-xl font-semibold text-sm transition-colors flex items-center gap-2 shrink-0"
                         style={inCart
                           ? { backgroundColor: "#25c666", color: "#fff" }
-                          : { backgroundColor: "#f0fdf4", color: "#25c666", border: "1px solid #25c666" }
+                          : { backgroundColor: "transparent", color: "#25c666", border: "1px solid #25c666" }
                         }
                         onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#1aaf55"; e.currentTarget.style.color = "#fff"; }}
-                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "#f0fdf4"; e.currentTarget.style.color = inCart ? "#fff" : "#25c666"; }}
+                        onMouseLeave={e => { e.currentTarget.style.backgroundColor = inCart ? "#25c666" : "transparent"; e.currentTarget.style.color = inCart ? "#fff" : "#25c666"; }}
                         onClick={() => addToCart({ id: item.id, name: item.label, price: item.price, icon: item.icon, qty: 1 })}
                       >
                         <Icon name={inCart ? "Check" : "ShoppingCart"} size={14} />

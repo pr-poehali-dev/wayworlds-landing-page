@@ -166,8 +166,7 @@ export default function Index() {
       {/* HERO */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16 md:py-24 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div className="text-center md:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-5 sm:mb-8"
-            style={{ backgroundColor: "#f0fdf4", borderColor: "#25c666" }}>
+          <div className="badge-green inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5 sm:mb-8">
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: "#25c666" }} />
             <span className="text-xs font-medium" style={{ color: "#4a7a48" }}>RolePlay сервер</span>
           </div>
@@ -232,8 +231,7 @@ export default function Index() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
           {features.map((f) => (
             <div key={f.title} className="feature-card rounded-2xl p-5 sm:p-6 flex gap-4 sm:block">
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 sm:mb-5"
-                style={{ backgroundColor: "#f0fdf4", border: "1px solid #25c666" }}>
+              <div className="icon-green-bg w-11 h-11 rounded-xl flex items-center justify-center shrink-0 sm:mb-5">
                 <Icon name={f.icon} size={22} fallback="Star" style={{ color: "#25c666" }} />
               </div>
               <div>
