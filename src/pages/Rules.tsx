@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
+import MobileNav from "@/components/MobileNav";
 
 const LOGO = "https://cdn.poehali.dev/files/61189b8c-3707-4976-99de-7498b29f1bce.png";
 
 export default function Rules() {
   return (
-    <div className="min-h-screen bg-[#f8fafb] text-gray-900">
+    <div className="min-h-screen bg-[#f8fafb] text-gray-900 pb-16 md:pb-0">
 
       {/* NAVBAR */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
@@ -91,6 +92,7 @@ export default function Rules() {
           </div>
         </div>
       </footer>
+      <MobileNav />
     </div>
   );
 }
